@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
+const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -58,8 +59,8 @@ function ContactForm({
   const handleFormSubmit = async (data: ContactFormValues) => {
     try {
       const endpoint = isEditing && initialData?._id 
-        ? `http://localhost:8000/api/contact/${initialData._id}`
-        : 'http://localhost:8000/api/addContact';
+        ? `${API_BASE}/contact/${initialData._id}`
+        : `${API_BASE}/addContact`;
 
       const method = isEditing ? 'put' : 'post';
 

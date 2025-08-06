@@ -28,10 +28,11 @@ export default function ProjectsAdmin() {
     const [showModal, setShowModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [processing, setProcessing] = useState(false);
+    const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
     const fetchProjects = async () => {
         try {
-            const { data } = await axios.get('http://localhost:8000/api/admin/projects');
+            const { data } = await axios.get(`${API_BASE}/admin/projects`);
             console.log(data.response);
             setProjects(data.response);
         } catch {
@@ -46,7 +47,7 @@ export default function ProjectsAdmin() {
     const handleDelete = async (id: string) => {
         setProcessing(true);
         try {
-            await axios.delete(`http://localhost:8000/api/project/${id}`);
+            await axios.delete(`${API_BASE}/project/${id}`);
             toast.success('Project deleted successfully');
             fetchProjects();
         } catch {
@@ -72,7 +73,7 @@ export default function ProjectsAdmin() {
 
         setProcessing(true);
         try {
-            await axios.patch(`http://localhost:8000/api/project/${id}/status`, { active: newActiveState });
+            await axios.patch(`${API_BASE}/project/${id}/status`, { active: newActiveState });
             toast.success('Project status updated');
         } catch (error) {
             console.error("Error updating project status:", error);
@@ -102,9 +103,9 @@ export default function ProjectsAdmin() {
             console.log(cleanedData)
 
             if (isEditing && selectedProject) {
-                await axios.put(`http://localhost:8000/api/project/${selectedProject._id}`, cleanedData);
+                await axios.put(`${API_BASE}/project/${selectedProject._id}`, cleanedData);
             } else {
-                await axios.post('http://localhost:8000/api/addProject', cleanedData);
+                await axios.post(`${API_BASE}/addProject`, cleanedData);
             }
 
             toast.success(`Project ${isEditing ? 'updated' : 'created'}`);

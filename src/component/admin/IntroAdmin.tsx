@@ -28,12 +28,13 @@ export default function IntrosAdmin() {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
 
 
   const fetchIntros = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/admin/intros');
+      const { data } = await axios.get(`${API_BASE}/admin/intros`);
       setIntros(data.response);
     } catch {
       toast.error('Failed to fetch intros');
@@ -47,7 +48,7 @@ export default function IntrosAdmin() {
   const handleDelete = async (id: string) => {
     setProcessing(true);
     try {
-      await axios.delete(`http://localhost:8000/api/intro/${id}`);
+      await axios.delete(`${API_BASE}/intro/${id}`);
       toast.success('Intro deleted successfully');
       fetchIntros();
     } catch {
@@ -73,7 +74,7 @@ export default function IntrosAdmin() {
 
     setProcessing(true);
     try {
-      await axios.patch(`http://localhost:8000/api/intro/${id}/status`, {
+      await axios.patch(`${API_BASE}/intro/${id}/status`, {
         active: newActiveState,
       });
       toast.success('Intro status updated');
@@ -99,9 +100,9 @@ export default function IntrosAdmin() {
       );
 
       if (isEditing && selectedIntro) {
-        await axios.put(`http://localhost:8000/api/intro/${selectedIntro._id}`, cleanedData);
+        await axios.put(`${API_BASE}/intro/${selectedIntro._id}`, cleanedData);
       } else {
-        await axios.post('http://localhost:8000/api/addIntro', cleanedData);
+        await axios.post(`${API_BASE}/addIntro`, cleanedData);
       }
 
       toast.success(`Intro ${isEditing ? 'updated' : 'created'} successfully`);

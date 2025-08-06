@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
 // Validation Schema
 const aboutMeSchema = z.object({
@@ -51,7 +52,7 @@ export default function AboutMeAdmin() {
   // Data fetching functions
   const fetchEntries = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/aboutMes');
+      const { data } = await axios.get(`${API_BASE}/aboutMes`);
       setAboutEntries(data.response);
     } catch (error) {
       console.log(error);
@@ -67,7 +68,7 @@ export default function AboutMeAdmin() {
   const handleDelete = async (id: string) => {
     setProcessing(true);
     try {
-      await axios.delete(`http://localhost:8000/api/aboutMe/${id}`);
+      await axios.delete(`${API_BASE}/aboutMe/${id}`);
       toast.success('Entry deleted successfully');
       fetchEntries();
     } catch (error) {
@@ -87,7 +88,7 @@ export default function AboutMeAdmin() {
       );
       setAboutEntries(updatedEntries);
 
-      await axios.patch(`http://localhost:8000/api/aboutMe/${id}/status`, {
+      await axios.patch(`${API_BASE}/aboutMe/${id}/status`, {
         active: !aboutEntries.find(entry => entry._id === id)?.active
       });
       
@@ -171,9 +172,9 @@ export default function AboutMeAdmin() {
 
         if (isEditing && selectedEntry) {
           console.log(formData)
-          await axios.put(`http://localhost:8000/api/aboutMe/${selectedEntry._id}`, formData);
+          await axios.put(`${API_BASE}/aboutMe/${selectedEntry._id}`, formData);
         } else {
-          await axios.post('http://localhost:8000/api/addAbout', formData);
+          await axios.post(`${API_BASE}/addAbout`, formData);
         }
         toast.success(`Entry ${isEditing ? 'updated' : 'created'}`);
         setShowModal(false);

@@ -39,10 +39,11 @@ export default function ContactAdmin() {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
   const fetchContacts = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/contacts');
+      const { data } = await axios.get(`${API_BASE}/contacts`);
       setContacts(data.response);
     } catch {
       toast.error('Failed to fetch contacts');
@@ -69,7 +70,7 @@ export default function ContactAdmin() {
   const handleDelete = async (contactId: string) => {
     setProcessing(true);
     try {
-      await axios.delete(`http://localhost:8000/api/contact/${contactId}`);
+      await axios.delete(`${API_BASE}/contact/${contactId}`);
       toast.success('Contact deleted successfully');
       await fetchContacts();
     } catch {
@@ -82,7 +83,7 @@ export default function ContactAdmin() {
   const handleToggleActive = async (contact: Contact) => {
     setProcessing(true);
     try {
-      await axios.put(`http://localhost:8000/api/contact/${contact._id}`, {
+      await axios.put(`${API_BASE}/contact/${contact._id}`, {
         ...contact,
         active: !contact.active
       });

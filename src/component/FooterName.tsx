@@ -10,7 +10,7 @@ import { Intro } from '../types/intro'
 //   weight: ['400', '500', '600', '700', '800'],
 // });
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 const FooterName = () => {
 
    const [introData, setIntroData] = useState<Intro | null>(null);

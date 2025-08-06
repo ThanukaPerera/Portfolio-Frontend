@@ -55,11 +55,12 @@ export default function AchievementsAdmin() {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
   
   // Data fetching functions
   const fetchAchievements = async () => {
     try {
-      const { data } = await axios.get('http://localhost:8000/api/achievements');
+      const { data } = await axios.get(`${API_BASE}/achievements`);
       setAchievements(data.response);
     } catch (error) {
       console.error(error);
@@ -74,7 +75,7 @@ export default function AchievementsAdmin() {
   const handleDelete = async (id: string) => {
     setProcessing(true);
     try {
-      await axios.delete(`http://localhost:8000/api/achievement/${id}`);
+      await axios.delete(`${API_BASE}/achievement/${id}`);
       toast.success('Achievement deleted successfully');
       fetchAchievements();
     } catch (error) {
@@ -97,7 +98,7 @@ export default function AchievementsAdmin() {
       );
       setAchievements(updatedAchievements);
 
-      await axios.patch(`http://localhost:8000/api/achievement/${id}/status`, {
+      await axios.patch(`${API_BASE}/achievement/${id}/status`, {
         active: !achievements.find(achievement => achievement._id === id)?.active
       });
       
@@ -159,9 +160,9 @@ export default function AchievementsAdmin() {
         };
 
         if (isEditing && selectedAchievement) {
-          await axios.put(`http://localhost:8000/api/achievement/${selectedAchievement._id}`, formData);
+          await axios.put(`${API_BASE}/achievement/${selectedAchievement._id}`, formData);
         } else {
-          await axios.post('http://localhost:8000/api/addAchievement', formData);
+          await axios.post(`${API_BASE}/addAchievement`, formData);
         }
         toast.success(`Achievement ${isEditing ? 'updated' : 'created'}`);
         setShowModal(false);
