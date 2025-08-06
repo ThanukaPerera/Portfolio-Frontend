@@ -198,15 +198,23 @@ export default function AboutMe({ data }: AboutMeProps) {
               {/* Main Lottie Container */}
               <div className="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 shadow-2xl">
                 <div className="relative overflow-hidden rounded-xl">
-                  <lottie-player
-                    src={data.lottieURL}
-                    background="transparent"
-                    speed="1"
-                    direction="1"
-                    loop
-                    autoplay
-                    className="w-full h-full"
-                  ></lottie-player>
+                  {/* Lottie player - using dangerouslySetInnerHTML as fallback */}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: data.lottieURL ? `
+                        <lottie-player
+                          src="${data.lottieURL}"
+                          background="transparent"
+                          speed="1"
+                          direction="1"
+                          loop
+                          autoplay
+                          style="width: 100%; height: 100%;"
+                        ></lottie-player>
+                      ` : '<div style="width: 100%; height: 300px; background: #334155; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">Animation not available</div>'
+                    }}
+                    className="w-full h-full min-h-[300px]"
+                  />
                 </div>
               </div>
 
@@ -298,7 +306,7 @@ export default function AboutMe({ data }: AboutMeProps) {
             </motion.div>
 
             {/* Call to Action */}
-            <motion.div
+            {/* <motion.div
               variants={itemVariants}
               className="flex items-center gap-4 mt-8 max-sm:flex-col max-sm:w-full"
             >
@@ -308,7 +316,7 @@ export default function AboutMe({ data }: AboutMeProps) {
                 className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Let's Connect
-              </motion.button>
+              </motion.button> */}
               {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -316,7 +324,9 @@ export default function AboutMe({ data }: AboutMeProps) {
               >
                 View Projects
               </motion.button> */}
-            </motion.div>
+{/*               
+            </motion.div> */}
+            
           </motion.div>
         </motion.div>
       </div>

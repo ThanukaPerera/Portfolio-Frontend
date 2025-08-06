@@ -209,7 +209,7 @@ function Footer({ data }: FooterProps) {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-700 rounded-full border border-slate-600/50 mb-6">
               <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-              <span className="text-slate-300 text-sm font-medium">Let's Connect</span>
+              <span className="text-slate-300 text-sm font-medium">Let&apos;s Connect</span>
             </div>
 
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -219,7 +219,7 @@ function Footer({ data }: FooterProps) {
               </span>
             </h2>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Let's bring your ideas to life with exceptional design and development
+              Let&apos;s bring your ideas to life with exceptional design and development
             </p>
           </motion.div>
 

@@ -43,7 +43,7 @@ const achievementSchema = z.object({
   date: z.string().min(1, "Date is required"),
   certification: z.string().optional(),
   imgLink: z.array(z.string()).optional(),
-  active: z.boolean().default(true)
+  active: z.boolean()
 });
 
 type AchievementFormValues = z.infer<typeof achievementSchema>;
@@ -62,6 +62,7 @@ export default function AchievementsAdmin() {
       const { data } = await axios.get('http://localhost:8000/api/achievements');
       setAchievements(data.response);
     } catch (error) {
+      console.error(error);
       toast.error('Failed to fetch achievements');
     }
   };
@@ -77,7 +78,12 @@ export default function AchievementsAdmin() {
       toast.success('Achievement deleted successfully');
       fetchAchievements();
     } catch (error) {
-      toast.error('Failed to delete achievement');
+      console.error(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || 'Failed to delete achievement');
+      } else {
+        toast.error('Failed to delete achievement');
+      }
     } finally {
       setProcessing(false);
     }
@@ -97,7 +103,12 @@ export default function AchievementsAdmin() {
       
       toast.success('Status updated');
     } catch (error) {
-      toast.error('Failed to update status');
+      console.error(error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || 'Failed to update status');
+      } else {
+        toast.error('Failed to update status');
+      }
       fetchAchievements();
     } finally {
       setProcessing(false);
@@ -106,17 +117,15 @@ export default function AchievementsAdmin() {
 
   // Form component
   const AchievementForm = ({ initialData }: { initialData?: Achievement | null }) => {
-    const [uploading, setUploading] = useState(false);
-
     const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<AchievementFormValues>({
       resolver: zodResolver(achievementSchema),
-      defaultValues: initialData || {
-        achievementtitle: '',
-        description: '',
-        date: '',
-        certification: '',
-        imgLink: [],
-        active: true
+      defaultValues: {
+        achievementtitle: initialData?.achievementtitle || '',
+        description: initialData?.description || '',
+        date: initialData?.date ? initialData.date.split('T')[0] : '',
+        certification: initialData?.certification || '',
+        imgLink: initialData?.imgLink || [],
+        active: initialData?.active ?? true
       }
     });
 
@@ -158,18 +167,15 @@ export default function AchievementsAdmin() {
         setShowModal(false);
         fetchAchievements();
       } catch (error) {
-        toast.error(`Failed to ${isEditing ? 'update' : 'create'} achievement`);
+        console.error(error);
+        if (axios.isAxiosError(error)) {
+          toast.error(error.response?.data?.message || `Failed to ${isEditing ? 'update' : 'create'} achievement`);
+        } else {
+          toast.error(`Failed to ${isEditing ? 'update' : 'create'} achievement`);
+        }
       } finally {
         setProcessing(false);
       }
-    };
-
-    const formatDate = (dateString: string) => {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
     };
 
     return (
@@ -237,7 +243,7 @@ export default function AchievementsAdmin() {
             value={watchedImages}
             onChange={handleImageChange}
             maxFiles={5}
-            disabled={uploading || isSubmitting}
+            disabled={isSubmitting}
           />
           <p className="text-sm text-gray-500">
             Upload images related to your achievement (certificates, photos, etc.)
@@ -263,16 +269,16 @@ export default function AchievementsAdmin() {
             type="button"
             variant="outline"
             onClick={() => setShowModal(false)}
-            disabled={isSubmitting || uploading}
+            disabled={isSubmitting}
           >
             Cancel
           </Button>
           <Button
             type="submit"
             variant="default"
-            disabled={isSubmitting || uploading}
+            disabled={isSubmitting}
           >
-            {isSubmitting || uploading ? 'Saving...' : (initialData ? 'Update' : 'Create')}
+            {isSubmitting ? 'Saving...' : (initialData ? 'Update' : 'Create')}
           </Button>
         </div>
       </form>
@@ -383,7 +389,7 @@ export default function AchievementsAdmin() {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete the achievement "{achievement.achievementtitle}".
+                      This action cannot be undone. This will permanently delete the achievement &ldquo;{achievement.achievementtitle}&rdquo;.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

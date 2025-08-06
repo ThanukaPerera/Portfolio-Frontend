@@ -6,6 +6,7 @@ import { FileIcon, X } from 'lucide-react';
 import { uploadFile } from '@/util/upload';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 interface FileUploadProps {
   onChange: (urls: string[]) => void;
@@ -35,11 +36,11 @@ export function FileUpload({
 
   // Initialize previews when value changes
   useEffect(() => {
-    // Clear existing previews
-    previews.forEach(preview => URL.revokeObjectURL(preview.url));
-    
-    // Reset previews
-    setPreviews([]);
+    // Clear existing previews when value changes
+    setPreviews(prevPreviews => {
+      prevPreviews.forEach(preview => URL.revokeObjectURL(preview.url));
+      return [];
+    });
   }, [value]);
 
   // Cleanup preview URLs
@@ -81,7 +82,7 @@ export function FileUpload({
         for (const preview of newPreviews) {
           try {
             const fileId = await uploadFile(preview.file, {
-              onProgress: (p) => {
+              onProgress: (p: number) => {
                 setProgress(prev => ({
                   ...prev,
                   [preview.name]: p
@@ -134,10 +135,11 @@ export function FileUpload({
             <div key={url} className="relative group">
               {isImage ? (
                 <div className="relative w-24 h-24 border rounded-md overflow-hidden">
-                  <img
+                  <Image
                     src={url}
                     alt={`Preview ${index}`}
-                    className="object-cover w-full h-full"
+                    fill
+                    className="object-cover"
                   />
                 </div>
               ) : (
@@ -170,10 +172,11 @@ export function FileUpload({
           return (
             <div key={preview.name + index} className="relative w-24 h-24 border rounded-md overflow-hidden">
               {isImage ? (
-                <img
+                <Image
                   src={preview.url}
                   alt={`Uploading ${preview.name}`}
-                  className="object-cover w-full h-full opacity-70"
+                  fill
+                  className="object-cover opacity-70"
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center w-full h-full bg-gray-50">

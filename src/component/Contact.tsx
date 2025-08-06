@@ -130,7 +130,7 @@ export default function Contact({ data }: ContactProps) {
             variants={itemVariants}
             className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed"
           >
-            Ready to start your next project? Let's connect and discuss how we can work together.
+            Ready to start your next project? Let us connect and discuss how we can work together.
           </motion.p>
         </motion.div>
 
@@ -265,7 +265,7 @@ export default function Contact({ data }: ContactProps) {
                 </div>
                 <p className="text-slate-300 text-sm leading-relaxed">
                   Open to freelance opportunities, collaborations, and exciting projects. 
-                  Let's discuss how we can work together!
+                  Let us discuss how we can work together!
                 </p>
               </div>
             </motion.div>

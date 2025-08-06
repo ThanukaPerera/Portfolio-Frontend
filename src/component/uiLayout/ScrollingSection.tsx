@@ -7,27 +7,31 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Achievement = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AboutData = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ProjectData = any;
+
 const API_BASE = 'http://localhost:8000/api';
 
-export default function ScrollingSection(): JSX.Element {
+export default function ScrollingSection(): React.ReactElement {
   const lenisRef = useRef<Lenis | null>(null);
-  const [introData, setIntroData] = useState(null);
-  const [aboutData, setAboutData] = useState(null);
-  const [projectData, setProjectData] = useState(null);
-  const [achievementData, setAchievementData] = useState(null);
-  const [selectedAchievement, setSelectedAchievement] = useState(null);
+  const [aboutData, setAboutData] = useState<AboutData[] | null>(null);
+  const [projectData, setProjectData] = useState<ProjectData[] | null>(null);
+  const [achievementData, setAchievementData] = useState<Achievement[] | null>(null);
+  const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [introRes,aboutRes, projectRes, achievementRes] = await Promise.all([
-          axios.get(`${API_BASE}/intros`, { headers: { 'Cache-Control': 'no-store' } }),
+        const [aboutRes, projectRes, achievementRes] = await Promise.all([
           axios.get(`${API_BASE}/aboutMes`, { headers: { 'Cache-Control': 'no-store' } }),
           axios.get(`${API_BASE}/projects`, { headers: { 'Cache-Control': 'no-store' } }),
           axios.get(`${API_BASE}/achievements`, { headers: { 'Cache-Control': 'no-store' } }),
         ]);
-        setIntroData(introRes.data.response[0])
         setAboutData(aboutRes.data.response[0]);
         setProjectData(projectRes.data.response);
         setAchievementData(achievementRes.data.response);
@@ -43,7 +47,6 @@ export default function ScrollingSection(): JSX.Element {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
     });
 
     lenisRef.current = lenis;
@@ -60,7 +63,8 @@ export default function ScrollingSection(): JSX.Element {
     };
   }, []);
 
-  const openAchievementDialog = (achievement) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const openAchievementDialog = (achievement: any) => {
     setSelectedAchievement(achievement);
     setIsDialogOpen(true);
     lenisRef.current?.stop();

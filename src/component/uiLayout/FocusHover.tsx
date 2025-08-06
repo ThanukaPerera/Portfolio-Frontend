@@ -7,12 +7,15 @@ import React, { MouseEvent, useRef, useState } from 'react';
 export default function FocusHover() {
     const boxWrapper = useRef(null);
     const [isHovered, setIsHovered] = useState(false);
-    const [mousePosition, setMousePosition] = React.useState({
+    const [mousePosition, setMousePosition] = React.useState<{
+        x: number | null;
+        y: number | null;
+    }>({
         x: null,
         y: null,
     });
     React.useEffect(() => {
-        const updateMousePosition = (ev: { clientX: any; clientY: any }) => {
+        const updateMousePosition = (ev: { clientX: number; clientY: number }) => {
             setMousePosition({ x: ev.clientX, y: ev.clientY });
         };
         window.addEventListener('mousemove', updateMousePosition);
@@ -23,7 +26,7 @@ export default function FocusHover() {
 
     const [overlayColor, setOverlayColor] = useState({ x: 0, y: 0 });
     const handleMouseMove = ({ currentTarget, clientX, clientY }: MouseEvent) => {
-        let { left, top } = currentTarget.getBoundingClientRect();
+        const { left, top } = currentTarget.getBoundingClientRect();
 
         const x = clientX - left;
         const y = clientY - top;

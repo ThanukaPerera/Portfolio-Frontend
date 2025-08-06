@@ -1,7 +1,7 @@
 // components/AboutMeAdmin.tsx
 'use client'
 import { useState, useEffect } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -32,10 +32,10 @@ import {
 const aboutMeSchema = z.object({
   intro1: z.string().min(10, "Intro 1 must be at least 10 characters"),
   intro2: z.string().optional(),
-  lottieURL: z.string().url("Invalid Lottie URL").optional().or(z.literal("")),
+  lottieURL: z.string().optional(),
   skills: z.array(z.string().min(1, "Skill name is required")).min(1, "At least one skill is required"),
   skillsImgLink: z.array(z.string()).optional(),
-  active: z.boolean().default(false)
+  active: z.boolean()
 });
 
 type AboutMeFormValues = z.infer<typeof aboutMeSchema>;
@@ -54,6 +54,8 @@ export default function AboutMeAdmin() {
       const { data } = await axios.get('http://localhost:8000/api/aboutMes');
       setAboutEntries(data.response);
     } catch (error) {
+      console.log(error);
+      setAboutEntries([]);
       toast.error('Failed to fetch entries');
     }
   };
@@ -69,6 +71,8 @@ export default function AboutMeAdmin() {
       toast.success('Entry deleted successfully');
       fetchEntries();
     } catch (error) {
+      console.error("Delete error:", error);
+      fetchEntries();
       toast.error('Failed to delete entry');
     } finally {
       setProcessing(false);
@@ -89,6 +93,8 @@ export default function AboutMeAdmin() {
       
       toast.success('Status updated');
     } catch (error) {
+      console.error("Status update error:", error);
+      setAboutEntries(aboutEntries); // Revert to previous state
       toast.error('Failed to update status');
       fetchEntries();
     } finally {
@@ -99,28 +105,32 @@ export default function AboutMeAdmin() {
   // Form component
   const   AboutMeForm = ({ initialData }: { initialData?: AboutMe | null }) => {
 
-    const [uploading, setUploading] = useState(false);
-
-    const { register, handleSubmit, reset, setValue, watch, control, formState: { errors, isSubmitting } } = useForm<AboutMeFormValues>({
+    const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<AboutMeFormValues>({
       resolver: zodResolver(aboutMeSchema),
-      defaultValues: initialData || {
-        intro1: '',
-        intro2: '',
-        lottieURL: '',
-        skills: [''],
-        skillsImgLink: [],
-        active: false
+      defaultValues: {
+        intro1: initialData?.intro1 || '',
+        intro2: initialData?.intro2 || '',
+        lottieURL: initialData?.lottieURL || '',
+        skills: initialData?.skills && initialData.skills.length > 0 ? initialData.skills : [''],
+        skillsImgLink: initialData?.skillsImgLink || [],
+        active: initialData?.active || false
       }
     });
 
-    const { fields, append, remove } = useFieldArray({
-      control,
-      name: "skills"
-    });
-
-    // Watch skills to manage skill images
-    const watchedSkills = watch("skills");
+    const watchedSkills = watch("skills") || [''];
     const watchedSkillImages = watch("skillsImgLink") || [];
+
+    const addSkill = () => {
+      const currentSkills = watch("skills") || [];
+      setValue("skills", [...currentSkills, '']);
+    };
+
+    const removeSkill = (index: number) => {
+      const currentSkills = watch("skills") || [];
+      if (currentSkills.length > 1) {
+        setValue("skills", currentSkills.filter((_, i) => i !== index));
+      }
+    };
 
     // Reset form when initialData changes
     useEffect(() => {
@@ -146,20 +156,6 @@ export default function AboutMeAdmin() {
       setValue('skillsImgLink', currentImages);
     };
 
-    const addSkill = () => {
-      append('');
-    };
-
-    const removeSkill = (index: number) => {
-      if (fields.length > 1) {
-        remove(index);
-        // Also remove corresponding image
-        const currentImages = [...watchedSkillImages];
-        currentImages.splice(index, 1);
-        setValue('skillsImgLink', currentImages);
-      }
-    };
-
     const handleFormSubmit = async (data: AboutMeFormValues) => {
       setProcessing(true);
       try {
@@ -183,7 +179,12 @@ export default function AboutMeAdmin() {
         setShowModal(false);
         fetchEntries();
       } catch (error) {
-        toast.error(`Failed to ${isEditing ? 'update' : 'create'} entry`);
+        console.error("Form submission error:", error);
+        if (axios.isAxiosError(error)) {
+          toast.error(`Failed to ${isEditing ? 'update' : 'create'} entry: ${error.response?.data?.message || error.message}`);
+        } else {
+          toast.error(`Failed to ${isEditing ? 'update' : 'create'} entry`);
+        }
       } finally {
         setProcessing(false);
       }
@@ -245,7 +246,7 @@ export default function AboutMeAdmin() {
               variant="outline"
               size="sm"
               onClick={addSkill}
-              disabled={uploading || isSubmitting}
+              disabled={isSubmitting}
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Skill
@@ -253,17 +254,17 @@ export default function AboutMeAdmin() {
           </div>
 
           <div className="space-y-4">
-            {fields.map((field, index) => (
-              <div key={field.id} className="border rounded-lg p-4 space-y-4 bg-gray-50">
+            {watchedSkills.map((skill, index) => (
+              <div key={index} className="border rounded-lg p-4 space-y-4 bg-gray-50">
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="font-medium text-gray-700">Skill {index + 1}</h4>
-                  {fields.length > 1 && (
+                  {watchedSkills.length > 1 && (
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => removeSkill(index)}
-                      disabled={uploading || isSubmitting}
+                      disabled={isSubmitting}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -291,7 +292,7 @@ export default function AboutMeAdmin() {
                     value={watchedSkillImages[index] ? [watchedSkillImages[index]] : []}
                     onChange={(urls) => handleSkillImageChange(index, urls)}
                     maxFiles={1}
-                    disabled={uploading || isSubmitting}
+                    disabled={isSubmitting}
                   />
                   <p className="text-sm text-gray-500">
                     Upload an icon or image representing this skill
@@ -325,16 +326,16 @@ export default function AboutMeAdmin() {
             type="button"
             variant="outline"
             onClick={() => setShowModal(false)}
-            disabled={isSubmitting || uploading}
+            disabled={isSubmitting}
           >
             Cancel
           </Button>
           <Button
             type="submit"
             variant="default"
-            disabled={isSubmitting || uploading}
+            disabled={isSubmitting}
           >
-            {isSubmitting || uploading ? 'Saving...' : (initialData ? 'Update' : 'Create')}
+            {isSubmitting ? 'Saving...' : (initialData ? 'Update' : 'Create')}
           </Button>
         </div>
       </form>

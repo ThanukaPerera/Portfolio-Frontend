@@ -22,6 +22,7 @@ const isValidUrl = (url: string) => {
     new URL(url);
     return true;
   } catch (e) {
+    console.error("Invalid URL:", url, e);
     return false;
   }
 };

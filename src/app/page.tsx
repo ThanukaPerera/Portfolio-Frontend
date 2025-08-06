@@ -7,10 +7,10 @@ import Projects from '@/component/uiLayout/Projects'
 import axios from 'axios';
 import Footer from "@/component/uiLayout/Footer";
 import ScrollingSection from "@/component/uiLayout/ScrollingSection";
-import FocusHover from "@/component/uiLayout/FocusHover"
 
 
-import { Poppins,Mulish } from 'next/font/google';
+
+import { Poppins} from 'next/font/google';
 import ContactDisplay from "@/component/Contact";
 import FooterName from "@/component/FooterName";
 
@@ -21,11 +21,11 @@ const poppins = Poppins({
   display: 'swap',
 });
 
-const mulish = Mulish({
-  subsets: ['latin'],
-  weight: ['400', '600'],
-  display: 'swap',
-});
+// const mulish = Mulish({
+//   subsets: ['latin'],
+//   weight: ['400', '600'],
+//   display: 'swap',
+// });
 
 const API_BASE = 'http://localhost:8000/api';
 
@@ -34,6 +34,7 @@ async function getIntros() {
     const res = await axios.get(`${API_BASE}/intros`, { headers: { 'Cache-Control': 'no-store' } });
     return res.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to fetch intros');
   }
 }
@@ -43,6 +44,7 @@ async function getAboutMes() {
     const res = await axios.get(`${API_BASE}/aboutMes`, { headers: { 'Cache-Control': 'no-store' } });
     return res.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to fetch aboutMes');
   }
 }
@@ -52,6 +54,7 @@ async function getProjects() {
     const res = await axios.get(`${API_BASE}/projects`, { headers: { 'Cache-Control': 'no-store' } });
     return res.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to fetch projects');
   }
 }
@@ -61,6 +64,7 @@ async function getAchievements() {
     const res = await axios.get(`${API_BASE}/achievements`, { headers: { 'Cache-Control': 'no-store' } });
     return res.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to fetch achievements');
   }
 }
@@ -70,6 +74,7 @@ async function getContacts() {
     const res = await axios.get(`${API_BASE}/contacts`, { headers: { 'Cache-Control': 'no-store' } });
     return res.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to fetch contacts');
   }
 }
@@ -82,7 +87,7 @@ async function getContacts() {
 
 
 export default async function Home() {
-  const [introData, aboutData, projectData, AchievementData, contactData] = await Promise.all([
+  const [introData, aboutData, projectData, contactData] = await Promise.all([
     getIntros(),
     getAboutMes(),
     getProjects(),

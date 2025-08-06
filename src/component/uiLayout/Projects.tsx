@@ -839,15 +839,6 @@ interface ProjectProps {
   data: Project[];
 }
 
-const isValidUrl = (url: string) => {
-  try {
-    new URL(url);
-    return true;
-  } catch (e) {
-    return false;
-  }
-};
-
 // Professional card colors
 const cardColors = [
   'rgba(59, 130, 246, 0.08)', // Blue
@@ -882,7 +873,7 @@ const headerVariants = {
   },
 };
 
-export default function Projects({ data }: ProjectProps): JSX.Element {
+export default function Projects({ data }: ProjectProps): React.ReactElement | null {
   const container = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -892,7 +883,6 @@ export default function Projects({ data }: ProjectProps): JSX.Element {
 
   useEffect(() => {
     const lenis = new Lenis({
-      smooth: true,
       lerp: 0.1,
     });
 
@@ -1094,7 +1084,6 @@ export const Card: React.FC<CardProps> = ({
   progress,
   range,
   targetScale,
-  totalCards,
   columnIndex,
 }) => {
   const container = useRef(null);
@@ -1110,7 +1099,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={container}
-      className="relative sticky top-4 mb-4"
+      className="sticky top-4 mb-4"
       style={{
         height: 'auto',
       }}

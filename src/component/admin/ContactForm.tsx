@@ -15,13 +15,17 @@ const contactSchema = z.object({
   email: z.string().email("Invalid email address"),
   mobile: z.string().regex(/^\+?[0-9]{10,15}$/, "Invalid phone number").optional().or(z.literal('')),
   address: z.string().optional(),
-  active: z.boolean().default(true)
+  active: z.boolean()
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
+interface Contact extends ContactFormValues {
+  _id: string;
+}
+
 interface ContactFormProps {
-  initialData?: any;
+  initialData?: Contact;
   onSubmit: () => void;
   onCancel: () => void;
   isEditing?: boolean;
@@ -35,13 +39,13 @@ function ContactForm({
 }: ContactFormProps) {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
-    defaultValues: initialData || {
-      name: '',
-      bday: '',
-      email: '',
-      mobile: '',
-      address: '',
-      active: true
+    defaultValues: {
+      name: initialData?.name || '',
+      bday: initialData?.bday || '',
+      email: initialData?.email || '',
+      mobile: initialData?.mobile || '',
+      address: initialData?.address || '',
+      active: initialData?.active ?? true
     }
   });
 

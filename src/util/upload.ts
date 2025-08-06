@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { z } from 'zod';
 
+// Define upload options interface
+interface UploadOptions {
+  onProgress?: (percent: number) => void;
+}
+
 // 1. Zod schema to validate the file
 const fileSchema = z
   .instanceof(File)
@@ -56,7 +61,7 @@ export const uploadFile = async (file: File, options?: UploadOptions): Promise<s
     });
     console.log(data.fileId)
     return data.fileId;
-  } catch (error) {
+  } catch {
     throw new Error('File upload failed');
   }
 };

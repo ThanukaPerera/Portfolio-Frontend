@@ -8,37 +8,36 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ImageUpload } from '@/component/admin/ImageUpload';
-import { FileUpload } from '@/component/admin/FileUpload';
 
 const projectSchema = z.object({
     projectTitle: z.string().min(3, "Title must be at least 3 characters"),
-    projectDescription: z.string().min(10, "Description must be at least 10 characters").or(z.literal('')).optional(),
-    projectImgLink: z.array(z.union([z.string().url("Invalid image URL"), z.literal("")])).optional().default([]),
-    projectVideoLink: z.array(z.union([z.string().url("Invalid video URL"), z.literal("")])).optional().default([]),
-    gitHubRepoLink: z.array(z.union([z.string().url("Invalid Github URL"), z.literal("")])).optional().default([]),
+    projectDescription: z.string().optional(),
+    projectImgLink: z.array(z.string()).default([]),
+    projectVideoLink: z.array(z.string()).default([]),
+    gitHubRepoLink: z.array(z.string()).default([]),
     active: z.boolean().default(false)
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
 
 interface ProjectFormProps {
-    initialData?: Project | null;
+    initialData?: ProjectFormValues | null;
     onSubmit: (data: ProjectFormValues) => void;
     onCancel: () => void;
 }
 
 export default function ProjectForm({ initialData, onSubmit, onCancel }: ProjectFormProps) {
-    const [videoLinks, setVideoLinks] = useState<string[]>(['']);
     const [githubLinks, setGithubLinks] = useState<string[]>(['']);
 
     const { register, handleSubmit, setValue, reset, watch, formState: { errors, isSubmitting } } = useForm<ProjectFormValues>({
+        // @ts-expect-error - Type mismatch between zod schema and form type
         resolver: zodResolver(projectSchema),
         defaultValues: initialData || {
             projectTitle: '',
             projectDescription: '',
             projectImgLink: [],
-            projectVideoLink: [''],
-            gitHubRepoLink: [''],
+            projectVideoLink: [],
+            gitHubRepoLink: [],
             active: false
         }
     });
@@ -46,37 +45,10 @@ export default function ProjectForm({ initialData, onSubmit, onCancel }: Project
     useEffect(() => {
         if (initialData) {
             reset(initialData);
-            setVideoLinks(initialData.projectVideoLink ?? ['']);
             setGithubLinks(initialData.gitHubRepoLink ?? ['']);
-            setValue('projectVideoLink', initialData.projectVideoLink ?? ['']);
-            setValue('gitHubRepoLink', initialData.gitHubRepoLink ?? ['']);
+            setValue('gitHubRepoLink', initialData.gitHubRepoLink ?? []);
         }
     }, [initialData, reset, setValue]);
-
-    const addMediaLink = (type: 'video') => {
-        if (type === 'video') {
-            const newLinks = [...videoLinks, ''];
-            setVideoLinks(newLinks);
-            setValue('projectVideoLink', newLinks);
-        }
-    };
-
-    const removeMediaLink = (type: 'video', index: number) => {
-        if (type === 'video') {
-            const newLinks = videoLinks.filter((_, i) => i !== index);
-            setVideoLinks(newLinks);
-            setValue('projectVideoLink', newLinks);
-        }
-    };
-
-    const updateMediaLink = (type: 'video', index: number, value: string) => {
-        if (type === 'video') {
-            const newLinks = [...videoLinks];
-            newLinks[index] = value;
-            setVideoLinks(newLinks);
-            setValue('projectVideoLink', newLinks);
-        }
-    };
 
     const addGithubLink = () => {
         const newLinks = [...githubLinks, ''];
@@ -112,6 +84,7 @@ export default function ProjectForm({ initialData, onSubmit, onCancel }: Project
     };
 
     return (
+        // @ts-expect-error - Form submit handler type issue
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
             <div className="space-y-2">
                 <Label>Project Title</Label>

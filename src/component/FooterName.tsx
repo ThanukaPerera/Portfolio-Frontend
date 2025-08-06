@@ -1,18 +1,19 @@
 "use client"
 
 import React,{ useState, useEffect } from 'react' 
-import { Montserrat } from 'next/font/google';
+// import { Montserrat } from 'next/font/google';
 import axios from 'axios'
+import { Intro } from '../types/intro'
 
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-});
+// const montserrat = Montserrat({
+//   subsets: ['latin'],
+//   weight: ['400', '500', '600', '700', '800'],
+// });
 
 const API_BASE = 'http://localhost:8000/api';
 const FooterName = () => {
 
-   const [introData, setIntroData] = useState(null);
+   const [introData, setIntroData] = useState<Intro | null>(null);
 
   useEffect(() => {
     async function fetchData() {

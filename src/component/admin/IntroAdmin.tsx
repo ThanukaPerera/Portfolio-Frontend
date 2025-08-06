@@ -27,7 +27,6 @@ export default function IntrosAdmin() {
   const [selectedIntro, setSelectedIntro] = useState<Intro | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
 
 
@@ -36,7 +35,7 @@ export default function IntrosAdmin() {
     try {
       const { data } = await axios.get('http://localhost:8000/api/admin/intros');
       setIntros(data.response);
-    } catch (error) {
+    } catch {
       toast.error('Failed to fetch intros');
     }
   };
@@ -51,11 +50,10 @@ export default function IntrosAdmin() {
       await axios.delete(`http://localhost:8000/api/intro/${id}`);
       toast.success('Intro deleted successfully');
       fetchIntros();
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete intro');
     } finally {
       setProcessing(false);
-      setDeleteId(null);
     }
   };
 
@@ -97,7 +95,7 @@ export default function IntrosAdmin() {
     setProcessing(true);
     try {
       const cleanedData = Object.fromEntries(
-        Object.entries(introData).filter(([_, v]) => v !== undefined)
+        Object.entries(introData).filter(([, v]) => v !== undefined)
       );
 
       if (isEditing && selectedIntro) {
@@ -268,7 +266,12 @@ export default function IntrosAdmin() {
           {isEditing ? 'Edit Intro' : 'Create New Intro'}
         </h2>
         <IntroForm
-          initialData={selectedIntro}
+          initialData={selectedIntro ? {
+            ...selectedIntro,
+            imgLink: selectedIntro.imgLink || '',
+            resumeLink: selectedIntro.resumeLink || '',
+            motto: selectedIntro.motto || "What's steady isn't slow."
+          } : null}
           onSubmit={handleFormSubmit}
           onCancel={() => setShowModal(false)}
         />
