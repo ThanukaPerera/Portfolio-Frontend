@@ -295,9 +295,22 @@ export default function AboutMeAdmin() {
                     maxFiles={1}
                     disabled={isSubmitting}
                   />
-                  <p className="text-sm text-gray-500">
-                    Upload an icon or image representing this skill
-                  </p>
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-500">
+                      Upload an icon or image representing this skill
+                    </p>
+                    <p className="text-sm text-blue-600">
+                      💡 Need icons? Get free icons from{' '}
+                      <a 
+                        href="https://uxwing.com/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="underline hover:text-blue-800 font-medium"
+                      >
+                        UXWing.com
+                      </a>
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}

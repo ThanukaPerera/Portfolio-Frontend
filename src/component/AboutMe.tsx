@@ -393,7 +393,7 @@ export default function AboutMe({ data }: AboutMeProps) {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-16 max-sm:mb-12"
+          className="sm:mb-16"
         >
           <SectionTitle title="About Me" description='A brief introduction about who I am, my approach to problem-solving, and the qualities I bring to every project.' />
         </motion.div>
@@ -404,13 +404,13 @@ export default function AboutMe({ data }: AboutMeProps) {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex w-full items-center max-sm:flex-col gap-16 max-sm:gap-12"
+          className="flex w-full items-center max-sm:flex-col gap-8 sm:gap-16 "
         >
           
           {/* Lottie Animation Section */}
           <motion.div
             variants={lottieVariants}
-            className="relative w-1/2 max-sm:w-full flex justify-center items-center"
+            className="relative w-1/2 sm:w-1/2 flex justify-center items-center"
           >
             {/* Subtle glow background */}
             <div className="absolute -inset-6 bg-gradient-to-r from-orange-500/15 to-red-500/15 rounded-3xl blur-2xl opacity-60" />
@@ -437,7 +437,7 @@ export default function AboutMe({ data }: AboutMeProps) {
               }}
             >
               {/* Gradient border */}
-              <div className="bg-gradient-to-r from-orange-500/80 to-red-500/80 p-[1px] rounded-2xl">
+              <div className="bg-gradient-to-r from-orange-500/80 to-red-500/80 p-[1px] rounded-2xl ">
                 <div className="bg-black rounded-2xl overflow-hidden">
                   <div
                     dangerouslySetInnerHTML={{
@@ -453,7 +453,7 @@ export default function AboutMe({ data }: AboutMeProps) {
                         ></lottie-player>
                       ` : '<div style="width: 100%; height: 300px; background: linear-gradient(135deg, #f97316, #ef4444); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">Animation Loading...</div>'
                     }}
-                    className="w-full h-full min-h-[300px]"
+                    className="w-full h-full "
                   />
                 </div>
               </div>
@@ -477,7 +477,7 @@ export default function AboutMe({ data }: AboutMeProps) {
           {/* Text Content Section */}
           <motion.div
             variants={textVariants}
-            className="flex flex-col gap-16 w-1/2 max-sm:w-full max-sm:justify-center max-sm:items-center"
+            className="flex flex-col gap-5 sm:gap-16 w-md sm:w-1/2 max-sm:justify-center max-sm:items-center"
           >
             {/* First Paragraph */}
             <motion.div

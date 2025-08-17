@@ -125,7 +125,7 @@ export default function SectionTitle({ title, description }: SectionTitleProps) 
       {description && (
         <motion.p
           variants={descriptionVariants}
-          className="text-md text-slate-400 max-w-2xl mx-auto leading-relaxed"
+          className="text-sm w-md sm:w-full sm:text-md text-slate-400 max-w-2xl mx-auto leading-relaxed"
         >
           {description}
         </motion.p>

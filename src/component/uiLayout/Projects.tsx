@@ -5,8 +5,6 @@
 // import { useRef, useEffect } from 'react';
 // import Image from 'next/image';
 
-
-
 // interface Project {
 //   _id: string;
 //   projectTitle: string;
@@ -156,7 +154,7 @@
 
 //             {/* Description */}
 //             <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mt-8">
-//               Explore my carefully crafted projects that showcase creativity, 
+//               Explore my carefully crafted projects that showcase creativity,
 //               technical expertise, and attention to detail.
 //             </p>
 
@@ -256,7 +254,6 @@
 //   // const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0.8]);
 //   const opacity = 1;
 
-  
 //   return (
 //     <div
 //       ref={container}
@@ -276,13 +273,13 @@
 //           className="relative backdrop-blur-2xl bg-white/5 rounded-3xl border border-white/10 shadow-2xl overflow-hidden group"
 //         >
 //           {/* Subtle Card Background - Always Blurred */}
-//           <div 
+//           <div
 //             className="absolute inset-0 backdrop-blur-3xl rounded-3xl"
-//             style={{ 
+//             style={{
 //               backgroundColor: cardColor,
 //             }}
 //           />
-          
+
 //           {/* Subtle border effect */}
 //           <div
 //             className="absolute inset-0 rounded-3xl border-2"
@@ -290,16 +287,16 @@
 //               borderColor: borderColor,
 //             }}
 //           />
-          
+
 //           {/* Content - NO HIDING */}
 //           <div className="relative z-10 p-8 md:p-12">
 //             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              
+
 //               {/* Text Content */}
 //               <div className="space-y-6">
 //                 {/* Project Number */}
 //                 <div className="inline-flex items-center gap-3">
-//                   <span 
+//                   <span
 //                     className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
 //                     style={{
 //                       backgroundColor: borderColor.replace('0.3', '0.8'),
@@ -378,7 +375,7 @@
 //           </div>
 
 //           {/* Subtle hover effect */}
-//           <div 
+//           <div
 //             className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
 //             style={{
 //               backgroundColor: cardColor.replace('0.15', '0.25'),
@@ -389,10 +386,6 @@
 //     </div>
 //   );
 // };
-
-
-
-
 
 // 'use client';
 
@@ -548,7 +541,7 @@
 
 //             {/* Description */}
 //             <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mt-8">
-//               Explore my carefully crafted projects that showcase creativity, 
+//               Explore my carefully crafted projects that showcase creativity,
 //               technical expertise, and attention to detail.
 //             </p>
 
@@ -700,15 +693,15 @@
 //         className="relative w-full"
 //       >
 //         <motion.div className="relative backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/[0.05] shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
-          
+
 //           {/* Subtle Card Background */}
-//           <div 
+//           <div
 //             className="absolute inset-0 backdrop-blur-2xl rounded-xl"
-//             style={{ 
+//             style={{
 //               backgroundColor: cardColor,
 //             }}
 //           />
-          
+
 //           {/* Border effect */}
 //           <div
 //             className="absolute inset-0 rounded-xl border"
@@ -716,7 +709,7 @@
 //               borderColor: borderColor,
 //             }}
 //           />
-          
+
 //           {/* Content */}
 //           <div className="relative z-10 p-4">
 //             {/* Project Image */}
@@ -743,7 +736,7 @@
 //               {/* Project Number and Category */}
 //               <div className="flex items-center justify-between">
 //                 <div className="inline-flex items-center gap-2">
-//                   <span 
+//                   <span
 //                     className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold"
 //                     style={{
 //                       backgroundColor: borderColor.replace('0.2', '0.8'),
@@ -801,7 +794,7 @@
 //           </div>
 
 //           {/* Hover effect */}
-//           <div 
+//           <div
 //             className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
 //             style={{
 //               backgroundColor: cardColor.replace('0.08', '0.12'),
@@ -813,17 +806,13 @@
 //   );
 // };
 
+"use client";
 
-
-
-
-
-'use client';
-
-import Lenis from '@studio-freight/lenis';
-import { useTransform, motion, useScroll, MotionValue } from 'framer-motion';
-import { useRef, useEffect } from 'react';
-import Image from 'next/image';
+import Lenis from "@studio-freight/lenis";
+import { useTransform, motion, useScroll, MotionValue } from "framer-motion";
+import { useRef, useEffect } from "react";
+import Image from "next/image";
+import SectionTitle from "../SectionTitle";
 
 interface Project {
   _id: string;
@@ -841,24 +830,24 @@ interface ProjectProps {
 
 // Professional card colors
 const cardColors = [
-  'rgba(59, 130, 246, 0.08)', // Blue
-  'rgba(139, 92, 246, 0.08)', // Purple
-  'rgba(16, 185, 129, 0.08)', // Emerald
-  'rgba(245, 101, 101, 0.08)', // Red
-  'rgba(251, 146, 60, 0.08)', // Orange
-  'rgba(14, 165, 233, 0.08)', // Sky
-  'rgba(168, 85, 247, 0.08)', // Violet
+  "rgba(59, 130, 246, 0.08)", // Blue
+  "rgba(139, 92, 246, 0.08)", // Purple
+  "rgba(16, 185, 129, 0.08)", // Emerald
+  "rgba(245, 101, 101, 0.08)", // Red
+  "rgba(251, 146, 60, 0.08)", // Orange
+  "rgba(14, 165, 233, 0.08)", // Sky
+  "rgba(168, 85, 247, 0.08)", // Violet
 ];
 
 // Professional border colors
 const borderColors = [
-  'rgba(59, 130, 246, 0.2)', // Blue
-  'rgba(139, 92, 246, 0.2)', // Purple
-  'rgba(16, 185, 129, 0.2)', // Emerald
-  'rgba(245, 101, 101, 0.2)', // Red
-  'rgba(251, 146, 60, 0.2)', // Orange
-  'rgba(14, 165, 233, 0.2)', // Sky
-  'rgba(168, 85, 247, 0.2)', // Violet
+  "rgba(59, 130, 246, 0.2)", // Blue
+  "rgba(139, 92, 246, 0.2)", // Purple
+  "rgba(16, 185, 129, 0.2)", // Emerald
+  "rgba(245, 101, 101, 0.2)", // Red
+  "rgba(251, 146, 60, 0.2)", // Orange
+  "rgba(14, 165, 233, 0.2)", // Sky
+  "rgba(168, 85, 247, 0.2)", // Violet
 ];
 
 const headerVariants = {
@@ -873,12 +862,14 @@ const headerVariants = {
   },
 };
 
-export default function Projects({ data }: ProjectProps): React.ReactElement | null {
+export default function Projects({
+  data,
+}: ProjectProps): React.ReactElement | null {
   const container = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ['start start', 'end end'],
+    offset: ["start start", "end end"],
   });
 
   useEffect(() => {
@@ -906,106 +897,23 @@ export default function Projects({ data }: ProjectProps): React.ReactElement | n
 
   return (
     <main ref={container}>
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden ">
-        {/* Floating Elements */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-br from-pink-500/10 to-orange-500/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 25, 0],
-            scale: [1, 0.9, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Content */}
-        <div className="relative z-10 text-center px-8 ">
-          <motion.div
-            variants={headerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-6 "
-          >
-            {/* Subtitle */}
-            <motion.div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-slate-800 to-slate-700 rounded-full border border-slate-600/50">
-              <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-              <span className="text-slate-300 text-sm font-medium uppercase tracking-wider">
-                Portfolio
-              </span>
-            </motion.div>
-
-            {/* Main Title */}
-            <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-white via-slate-100 to-white bg-clip-text text-transparent leading-tight">
-              Featured
-            </h1>
-            <h2 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent leading-tight -mt-4">
-              Projects
-            </h2>
-
-            {/* Description */}
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mt-8">
-              Explore my carefully crafted projects that showcase creativity, 
-              technical expertise, and attention to detail.
-            </p>
-
-            {/* Stats */}
-            <div className="flex items-center justify-center gap-8 mt-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">{data.length}</div>
-                <div className="text-sm text-slate-400">Projects</div>
-              </div>
-              <div className="h-8 w-px bg-slate-600" />
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">100%</div>
-                <div className="text-sm text-slate-400">Custom Built</div>
-              </div>
-              <div className="h-8 w-px bg-slate-600" />
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">2024</div>
-                <div className="text-sm text-slate-400">Latest Work</div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <div className="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full mt-2 animate-pulse" />
-          </div>
-        </motion.div>
-      </section>
-
       {/* Projects Section - Two Columns */}
       <section className="relative px-4 md:px-8 mb-30">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-16">
+            <SectionTitle
+              title="Featured Projects"
+              description="Explore my carefully crafted projects that showcase creativity, 
+              technical expertise, and attention to detail."
+            />
+          </div>
           <div className="flex gap-6">
             {/* Left Column */}
             <div className="flex-1 space-y-3">
               {leftProjects.map((project, i) => {
-                const originalIndex = data.findIndex(p => p._id === project._id);
+                const originalIndex = data.findIndex(
+                  (p) => p._id === project._id
+                );
                 const targetScale = 1 - (leftProjects.length - i) * 0.02;
                 return (
                   <Card
@@ -1015,7 +923,9 @@ export default function Projects({ data }: ProjectProps): React.ReactElement | n
                     src={project.gitHubRepoLink}
                     title={project.projectTitle}
                     cardColor={cardColors[originalIndex % cardColors.length]}
-                    borderColor={borderColors[originalIndex % borderColors.length]}
+                    borderColor={
+                      borderColors[originalIndex % borderColors.length]
+                    }
                     description={project.projectDescription}
                     progress={scrollYProgress}
                     range={[i * 0.12, 1]}
@@ -1028,9 +938,11 @@ export default function Projects({ data }: ProjectProps): React.ReactElement | n
             </div>
 
             {/* Right Column */}
-            <div className="flex-1 space-y-3" style={{ marginTop: '80px' }}>
+            <div className="flex-1 space-y-3" style={{ marginTop: "80px" }}>
               {rightProjects.map((project, i) => {
-                const originalIndex = data.findIndex(p => p._id === project._id);
+                const originalIndex = data.findIndex(
+                  (p) => p._id === project._id
+                );
                 const targetScale = 1 - (rightProjects.length - i) * 0.02;
                 return (
                   <Card
@@ -1040,7 +952,9 @@ export default function Projects({ data }: ProjectProps): React.ReactElement | n
                     src={project.gitHubRepoLink}
                     title={project.projectTitle}
                     cardColor={cardColors[originalIndex % cardColors.length]}
-                    borderColor={borderColors[originalIndex % borderColors.length]}
+                    borderColor={
+                      borderColors[originalIndex % borderColors.length]
+                    }
                     description={project.projectDescription}
                     progress={scrollYProgress}
                     range={[i * 0.12, 1]}
@@ -1089,7 +1003,7 @@ export const Card: React.FC<CardProps> = ({
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ['start end', 'start start'],
+    offset: ["start end", "start start"],
   });
 
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
@@ -1101,7 +1015,7 @@ export const Card: React.FC<CardProps> = ({
       ref={container}
       className="sticky top-4 mb-4"
       style={{
-        height: 'auto',
+        height: "auto",
       }}
     >
       <motion.div
@@ -1113,15 +1027,14 @@ export const Card: React.FC<CardProps> = ({
         className="relative w-full"
       >
         <motion.div className="relative backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/[0.05] shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
-          
           {/* Subtle Card Background */}
-          <div 
+          <div
             className="absolute inset-0 backdrop-blur-2xl rounded-xl"
-            style={{ 
+            style={{
               backgroundColor: cardColor,
             }}
           />
-          
+
           {/* Border effect */}
           <div
             className="absolute inset-0 rounded-xl border"
@@ -1129,7 +1042,7 @@ export const Card: React.FC<CardProps> = ({
               borderColor: borderColor,
             }}
           />
-          
+
           {/* Content */}
           <div className="relative z-10 p-4">
             {/* Project Image */}
@@ -1157,13 +1070,13 @@ export const Card: React.FC<CardProps> = ({
               {/* Project Number and Category */}
               <div className="flex items-center justify-between">
                 <div className="inline-flex items-center gap-2">
-                  <span 
+                  <span
                     className="w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold"
                     style={{
-                      backgroundColor: borderColor.replace('0.2', '0.8'),
+                      backgroundColor: borderColor.replace("0.2", "0.8"),
                     }}
                   >
-                    {String(i + 1).padStart(2, '0')}
+                    {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-slate-400 text-xs uppercase tracking-wider font-medium">
                     Project
@@ -1191,7 +1104,7 @@ export const Card: React.FC<CardProps> = ({
                   whileTap={{ scale: 0.98 }}
                   className="inline-flex items-center gap-2 text-white px-3 py-1.5 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 text-xs"
                   style={{
-                    backgroundColor: borderColor.replace('0.2', '0.7'),
+                    backgroundColor: borderColor.replace("0.2", "0.7"),
                   }}
                 >
                   View Project
@@ -1215,10 +1128,10 @@ export const Card: React.FC<CardProps> = ({
           </div>
 
           {/* Hover effect */}
-          <div 
+          <div
             className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
             style={{
-              backgroundColor: cardColor.replace('0.08', '0.12'),
+              backgroundColor: cardColor.replace("0.08", "0.12"),
             }}
           />
         </motion.div>
