@@ -109,18 +109,15 @@ export default function Contact({ data }: ContactProps) {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="mb-8">
-            <motion.div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-700 rounded-full border border-slate-600/50 mb-6">
-              <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
-              <span className="text-slate-300 text-sm font-medium">Get In Touch</span>
-            </motion.div>
+            
 
             <motion.h1
-              className={`text-6xl max-sm:text-4xl font-bold mb-6 ${montserrat.className}`}
+              className={`text-5xl max-sm:text-4xl font-bold mb-6 ${montserrat.className}`}
             >
               <span className="bg-gradient-to-r from-white via-slate-100 to-white bg-clip-text text-transparent">
                 Contact
               </span>
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-orange-800 bg-clip-text text-transparent">
                 {' '}Information
               </span>
             </motion.h1>
@@ -128,7 +125,7 @@ export default function Contact({ data }: ContactProps) {
 
           <motion.p
             variants={itemVariants}
-            className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed"
+            className="text-md text-slate-400 max-w-2xl mx-auto leading-relaxed"
           >
             Ready to start your next project? Let us connect and discuss how we can work together.
           </motion.p>

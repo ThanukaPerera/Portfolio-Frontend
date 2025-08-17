@@ -4,7 +4,7 @@ import React from 'react';
 function SocialMediaLinks() {
   return (
     <>
-      <div className='w-full text-5xl py-8  inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)] '>
+      <div className='w-full  text-5xl pt-5 inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)] '>
         <ul className='flex items-center justify-center md:justify-start sm:[&_li]:mx-8 [&_li]:mx-4 [&_img]:max-w-none animate-infinite-scroll'>
           <li>
             <a
@@ -18,7 +18,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
         </svg>
@@ -28,7 +28,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.youtube.com/naymurweb'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
           width="24"
@@ -36,7 +36,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M19.7 3H4.3A1.3 1.3 0 0 0 3 4.3v15.4A1.3 1.3 0 0 0 4.3 21h15.4a1.3 1.3 0 0 0 1.3-1.3V4.3A1.3 1.3 0 0 0 19.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.206v4.25h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.779 3.203 4.092v4.71z" />
         </svg>
@@ -46,7 +46,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://github.com/ThanukaPerera'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
                 width='202'
@@ -54,7 +54,7 @@ function SocialMediaLinks() {
                 viewBox='0 0 202 202'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className=' fill-primary-foreground w-10 h-10'
+                className=' fill-primary-foreground w-6 h-6'
               >
                 <path
                   fillRule='evenodd'
@@ -68,7 +68,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.facebook.com/profile.php?id=100089628247787&mibextid=ZbWKwL'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
                <svg
           width="24"
@@ -76,7 +76,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
         </svg>
@@ -86,7 +86,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.youtube.com/naymurweb'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
           width="24"
@@ -94,7 +94,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M19.7 3H4.3A1.3 1.3 0 0 0 3 4.3v15.4A1.3 1.3 0 0 0 4.3 21h15.4a1.3 1.3 0 0 0 1.3-1.3V4.3A1.3 1.3 0 0 0 19.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.206v4.25h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.779 3.203 4.092v4.71z" />
         </svg>
@@ -104,7 +104,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://github.com/ThanukaPerera'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
                 width='202'
@@ -112,7 +112,7 @@ function SocialMediaLinks() {
                 viewBox='0 0 202 202'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className=' fill-primary-foreground w-10 h-10'
+                className=' fill-primary-foreground w-6 h-6'
               >
                 <path
                   fillRule='evenodd'
@@ -126,7 +126,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.facebook.com/profile.php?id=100089628247787&mibextid=ZbWKwL'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
                <svg
           width="24"
@@ -134,7 +134,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
         </svg>
@@ -144,7 +144,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.youtube.com/naymurweb'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
           width="24"
@@ -152,7 +152,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M19.7 3H4.3A1.3 1.3 0 0 0 3 4.3v15.4A1.3 1.3 0 0 0 4.3 21h15.4a1.3 1.3 0 0 0 1.3-1.3V4.3A1.3 1.3 0 0 0 19.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.206v4.25h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.779 3.203 4.092v4.71z" />
         </svg>
@@ -162,7 +162,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://github.com/ThanukaPerera'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
                 width='202'
@@ -170,7 +170,7 @@ function SocialMediaLinks() {
                 viewBox='0 0 202 202'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className=' fill-primary-foreground w-10 h-10'
+                className=' fill-primary-foreground w-6 h-6'
               >
                 <path
                   fillRule='evenodd'
@@ -189,7 +189,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.facebook.com/profile.php?id=100089628247787&mibextid=ZbWKwL'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
           width="24"
@@ -197,7 +197,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
         </svg>
@@ -207,7 +207,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.youtube.com/naymurweb'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
           width="24"
@@ -215,7 +215,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M19.7 3H4.3A1.3 1.3 0 0 0 3 4.3v15.4A1.3 1.3 0 0 0 4.3 21h15.4a1.3 1.3 0 0 0 1.3-1.3V4.3A1.3 1.3 0 0 0 19.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.206v4.25h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.779 3.203 4.092v4.71z" />
         </svg>
@@ -225,7 +225,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://github.com/ThanukaPerera'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
                 width='202'
@@ -233,7 +233,7 @@ function SocialMediaLinks() {
                 viewBox='0 0 202 202'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className=' fill-primary-foreground w-10 h-10'
+                className=' fill-primary-foreground w-6 h-6'
               >
                 <path
                   fillRule='evenodd'
@@ -247,7 +247,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.facebook.com/profile.php?id=100089628247787&mibextid=ZbWKwL'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
                <svg
           width="24"
@@ -255,7 +255,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
         </svg>
@@ -265,7 +265,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.youtube.com/naymurweb'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
           width="24"
@@ -273,7 +273,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M19.7 3H4.3A1.3 1.3 0 0 0 3 4.3v15.4A1.3 1.3 0 0 0 4.3 21h15.4a1.3 1.3 0 0 0 1.3-1.3V4.3A1.3 1.3 0 0 0 19.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.206v4.25h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.779 3.203 4.092v4.71z" />
         </svg>
@@ -283,7 +283,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://github.com/ThanukaPerera'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
                 width='202'
@@ -291,7 +291,7 @@ function SocialMediaLinks() {
                 viewBox='0 0 202 202'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className=' fill-primary-foreground w-10 h-10'
+                className=' fill-primary-foreground w-6 h-6'
               >
                 <path
                   fillRule='evenodd'
@@ -305,7 +305,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.facebook.com/profile.php?id=100089628247787&mibextid=ZbWKwL'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
                <svg
           width="24"
@@ -313,7 +313,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
         </svg>
@@ -323,7 +323,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://www.youtube.com/naymurweb'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
           width="24"
@@ -331,7 +331,7 @@ function SocialMediaLinks() {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="fill-primary-foreground w-10 h-10"
+          className="fill-primary-foreground w-6 h-6"
         >
           <path d="M19.7 3H4.3A1.3 1.3 0 0 0 3 4.3v15.4A1.3 1.3 0 0 0 4.3 21h15.4a1.3 1.3 0 0 0 1.3-1.3V4.3A1.3 1.3 0 0 0 19.7 3zM8.339 18.338H5.667v-8.59h2.672v8.59zM7.004 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.764H15.67v-4.177c0-.996-.017-2.278-1.387-2.278-1.389 0-1.601 1.086-1.601 2.206v4.25h-2.667v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.779 3.203 4.092v4.71z" />
         </svg>
@@ -341,7 +341,7 @@ function SocialMediaLinks() {
             <a
               target='_blank'
               href='https://github.com/ThanukaPerera'
-              className='border bg-primary  text-primary-foreground text-2xl  sm:grid hidden place-content-center  p-2   rounded-md'
+              className='border bg-primary  text-primary-foreground text-2xl  grid place-content-center  p-2   rounded-md'
             >
               <svg
                 width='202'
@@ -349,7 +349,7 @@ function SocialMediaLinks() {
                 viewBox='0 0 202 202'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
-                className=' fill-primary-foreground w-10 h-10'
+                className=' fill-primary-foreground w-6 h-6'
               >
                 <path
                   fillRule='evenodd'

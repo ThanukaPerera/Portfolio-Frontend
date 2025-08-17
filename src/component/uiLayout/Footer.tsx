@@ -140,21 +140,9 @@ const mottoVariants = {
 
 
 function Footer({ data }: FooterProps) {
-
- 
-
-
-
-
-
-
   if (!data || !data._id) {
     return null;
   }
-
-
-
-
 
   return (
     <footer className="relative w-full overflow-hidden bg-black">
@@ -208,17 +196,17 @@ function Footer({ data }: FooterProps) {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-700 rounded-full border border-slate-600/50 mb-6">
-              <span className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse" />
+              <span className="w-2 h-2 bg-gradient-to-r from-orange-500  to-orange-400 rounded-full animate-pulse" />
               <span className="text-slate-300 text-sm font-medium">Let&apos;s Connect</span>
             </div>
 
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Ready to{' '}
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-orange-800 bg-clip-text text-transparent">
                 collaborate?
               </span>
             </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-400 text-md max-w-2xl mx-auto">
               Let&apos;s bring your ideas to life with exceptional design and development
             </p>
           </motion.div>
@@ -239,33 +227,11 @@ function Footer({ data }: FooterProps) {
           </motion.div>
 
           {/* Social Media Links */}
-          <motion.div variants={itemVariants} className="mb-16">
+          <motion.div variants={itemVariants} className="w-4xl mx-auto max-sm:w-xl">
             <SocialMediaLinks />
           </motion.div>
 
-          {/* Contact CTA */}
-          {/* <motion.div 
-            variants={itemVariants}
-            className="text-center mb-16"
-          >
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                Start a Project
-              </motion.button>
-              <motion.a
-                href={`mailto:contact@${data.fname.toLowerCase()}${data.lname.toLowerCase()}.com`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 rounded-xl border-2 border-slate-600 text-slate-300 font-semibold hover:border-slate-500 hover:bg-slate-800 transition-all duration-300"
-              >
-                Send Message
-              </motion.a>
-            </div>
-          </motion.div> */}
+         
         </motion.div>
 
         {/* Separator with Sparkles */}
@@ -294,42 +260,7 @@ function Footer({ data }: FooterProps) {
           className="bg-gradient-to-b from-transparent to-black/50"
         >
           <div className="max-w-7xl mx-auto px-8 py-12">
-            {/* Footer Info */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col md:flex-row items-center justify-between gap-8"
-            >
-              {/* Brand */}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">
-                    {data.fname.charAt(0)}{data.lname.charAt(0)}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg">
-                    {data.fname} {data.lname}
-                  </h3>
-                  <p className="text-slate-400 text-sm">{data.title}</p>
-                </div>
-              </div>
-
-              {/* Status & Links */}
-              <div className="flex items-center gap-8">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-slate-300 text-sm">Available for work</span>
-                </div>
-
-                <div className="flex items-center gap-4 text-slate-400 text-sm">
-                  <span>Privacy</span>
-                  <span>•</span>
-                  <span>Terms</span>
-                  <span>•</span>
-                  <span>Cookies</span>
-                </div>
-              </div>
-            </motion.div>
+           
 
             {/* Copyright */}
             <motion.div
@@ -338,7 +269,7 @@ function Footer({ data }: FooterProps) {
             >
               <p className="text-slate-500 text-sm">
                 © {new Date().getFullYear()} {data.fname} {data.lname}. All rights reserved.
-                Made with 💜 and lots of ☕
+
               </p>
             </motion.div>
           </div>
