@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import { Montserrat } from 'next/font/google';
 import { calculateAge } from '@/util/ageCalculator';
-import { Mail, Smartphone , User, Cake , MapPin } from 'lucide-react';
+import { Mail, Smartphone , User, Cake , MapPin, Section } from 'lucide-react';
+import SectionTitle from './SectionTitle';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -101,36 +102,11 @@ export default function Contact({ data }: ContactProps) {
 
       {/* Main Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-8 max-sm:px-6">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="text-center mb-16"
-        >
-          {/* Section Header */}
-          <motion.div variants={itemVariants} className="mb-8">
-            
+        
+        <div className="mb-12">
+          <SectionTitle title="Contact Information" description="Ready to start your next project? Let us connect and discuss how we can work together." />
 
-            <motion.h1
-              className={`text-5xl max-sm:text-4xl font-bold mb-6 ${montserrat.className}`}
-            >
-              <span className="bg-gradient-to-r from-white via-slate-100 to-white bg-clip-text text-transparent">
-                Contact
-              </span>
-              <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-orange-800 bg-clip-text text-transparent">
-                {' '}Information
-              </span>
-            </motion.h1>
-          </motion.div>
-
-          <motion.p
-            variants={itemVariants}
-            className="text-md text-slate-400 max-w-2xl mx-auto leading-relaxed"
-          >
-            Ready to start your next project? Let us connect and discuss how we can work together.
-          </motion.p>
-        </motion.div>
-
+        </div>
         {/* Contact Cards Grid */}
         <motion.div
           variants={containerVariants}

@@ -38,7 +38,7 @@ const FooterName = () => {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-transparent via-blue-950/10 to-purple-950/5" />
 
-        <h1 className='text-8xl w-[80%] m-auto group-hover:translate-y-4 translate-y-20 leading-[100%] uppercase font-semibold text-center bg-gradient-to-r from-gray-200 via-gray-400 to-gray-600 bg-clip-text text-transparent transition-all ease-linear'>
+        <h1 className='text-4xl sm:text-8xl w-[80%] m-auto group-hover:translate-y-4 translate-y-20 leading-[100%] uppercase font-semibold text-center bg-gradient-to-r from-gray-200 via-gray-400 to-gray-600 bg-clip-text text-transparent transition-all ease-linear'>
           {`${introData?.fname} ${introData?.lname}`}
           
         </h1>

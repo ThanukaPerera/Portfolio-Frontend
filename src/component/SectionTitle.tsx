@@ -1,25 +1,135 @@
+// import { Montserrat } from 'next/font/google';
+// import { motion } from 'framer-motion';
 
-  import { Montserrat } from 'next/font/google';
+// type SectionTitleProps = {
+//   title: string;
+// };
+
+// const montserrat = Montserrat({
+//   subsets: ['latin'],
+//   weight: ['400', '500', '600', '700', '800'],
+// });
+
+// // Animation Variants
+// const titleVariants = {
+//   hidden: { opacity: 0, y: 40 },   // start invisible + pushed down
+//   visible: { 
+//     opacity: 1, 
+//     y: 0, 
+//     transition: { duration: 0.6, ease: "easeOut" } 
+//   },
+// };
+
+// export default function SectionTitle({ title }: SectionTitleProps) {
+//   const words = title.split(" ");
+//   const lastWord = words.pop();
+//   const firstPart = words.join(" ");
+
+//   return (
+//     <motion.h1
+//       variants={titleVariants}
+//       initial="hidden"
+//       whileInView="visible"
+//       viewport={{ once: true, amount: 0.6 }} // animates once when in view
+//       className={`text-5xl max-sm:text-4xl font-bold mb-6 text-center ${montserrat.className}`}
+//     >
+//       <span className="bg-gradient-to-r from-white via-slate-100 to-white bg-clip-text text-transparent">
+//         {firstPart}
+//       </span>{" "}
+//       <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-orange-800 bg-clip-text text-transparent">
+//         {lastWord}
+//       </span>
+//     </motion.h1>
+//   );
+// }
 
 
+
+import { Montserrat } from 'next/font/google';
+import { motion } from 'framer-motion';
 
 type SectionTitleProps = {
-    title: string;
-  };
+  title: string;
+  description?: string;
+};
 
-  
-  const montserrat = Montserrat({
-    subsets: ['latin'],
-    weight: ['400', '500', '600', '700', '800'], // adjust based on what you need
-  });
-  
-  
-  export default function SectionTitle({ title }: SectionTitleProps) {
-    return (
-      <div className={`flex gap-10 items-center py-10 ${montserrat.className}`}>
-        <h1 className="text-[5vh] font-semibold text-primaryColor max-sm:text-[4vh]">{title}</h1>
-        <div className="w-60 h-[1px] bg-tertiaryColor max-sm:hidden"></div>
-      </div>
-    );
-  }
-  
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+// Parent container for stagger effect
+const containerVariants = {
+  hidden: { opacity: 1 }, // keep container visible, but children hidden
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 }, // stagger letters
+  },
+};
+
+// Each letter animation
+const letterVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+};
+
+// Description animation (delayed after title)
+const descriptionVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", delay: 0.5 }, // staged delay
+  },
+};
+
+export default function SectionTitle({ title, description }: SectionTitleProps) {
+  const words = title.split(" ");
+  const lastWord = words.pop() || "";
+  const firstPart = words.join(" ");
+
+  // Helper for animated text
+  const renderAnimatedText = (text: string, gradientClass: string) => (
+    <span className={`${gradientClass} bg-clip-text text-transparent`}>
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          variants={letterVariants}
+          style={{ display: "inline-block" }}
+        >
+          {char === " " ? "\u00A0" : char} {/* keep spaces */}
+        </motion.span>
+      ))}
+    </span>
+  );
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.6 }}
+      className="mb-8 text-center"
+    >
+      <motion.h1
+        variants={containerVariants}
+        className={`text-3xl sm:text-4xl font-bold mb-6 ${montserrat.className}`}
+      >
+        {renderAnimatedText(firstPart + " ", "bg-gradient-to-r from-white via-slate-100 to-white")}
+        {renderAnimatedText(lastWord, "bg-gradient-to-r from-orange-500 via-orange-400 to-orange-800")}
+      </motion.h1>
+
+      {description && (
+        <motion.p
+          variants={descriptionVariants}
+          className="text-md text-slate-400 max-w-2xl mx-auto leading-relaxed"
+        >
+          {description}
+        </motion.p>
+      )}
+    </motion.div>
+  );
+}

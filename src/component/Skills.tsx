@@ -61,7 +61,7 @@ export default function Skills({ data }: SkillsProps) {
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-start justify-center mx-auto max-w-7xl py-16 px-8 max-sm:px-6">
+      <div className="relative z-10 flex flex-col items-center justify-center mx-auto max-w-7xl py-16 px-8 max-sm:px-6">
         
         {/* Section Title with Animation */}
         <motion.div
@@ -70,7 +70,7 @@ export default function Skills({ data }: SkillsProps) {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mb-16 max-sm:mb-12"
         >
-          <SectionTitle title="Skills" />
+          <SectionTitle title="My Skills" />
         </motion.div>
 
         {/* Skills Grid */}
@@ -134,24 +134,7 @@ export default function Skills({ data }: SkillsProps) {
           </div>
         </motion.div>
 
-        {/* Skills Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="w-full mt-16 text-center"
-        >
-          <div className="inline-flex items-center gap-3 px-6 py-3 border border-gray-600/30 rounded-full">
-            <span className="w-2 h-2 bg-gray-400 rounded-full" />
-            <span className="text-gray-300 font-medium">
-              {data.skills.length} Skills
-            </span>
-            <span className="text-gray-500">•</span>
-            <span className="text-gray-400 text-sm">
-              Professional Development
-            </span>
-          </div>
-        </motion.div>
+         
       </div>
     </div>
   );

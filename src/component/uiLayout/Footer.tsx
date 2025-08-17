@@ -227,7 +227,7 @@ function Footer({ data }: FooterProps) {
           </motion.div>
 
           {/* Social Media Links */}
-          <motion.div variants={itemVariants} className="w-4xl mx-auto max-sm:w-xl">
+          <motion.div variants={itemVariants} className="w-sm mx-auto sm:w-4xl">
             <SocialMediaLinks />
           </motion.div>
 
