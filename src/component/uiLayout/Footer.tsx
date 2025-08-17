@@ -73,7 +73,7 @@
 
 'use client'
 import React  from 'react';
-import { motion } from 'framer-motion';
+import { easeOut, motion } from 'framer-motion';
 import { Sparkles } from '@/component/uiLayout/Sparkles';
 import SocialMediaLinks from './SocialMediaLinks';
 import AnimatedText from './cursor-follow-text';
@@ -121,7 +121,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: easeOut,
     },
   },
 };
@@ -133,7 +133,7 @@ const mottoVariants = {
     scale: 1,
     transition: {
       duration: 1,
-      ease: "easeOut",
+      ease: easeOut,
     },
   },
 };

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Intro } from '@/types/intro';
 import { toast } from 'sonner';
 import Modal from '@/component/Modal';
@@ -21,6 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+ const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
 export default function IntrosAdmin() {
   const [intros, setIntros] = useState<Intro[]>([]);
@@ -28,22 +29,22 @@ export default function IntrosAdmin() {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+ 
 
 
 
-  const fetchIntros = async () => {
+  const fetchIntros = useCallback(async () => {
     try {
       const { data } = await axios.get(`${API_BASE}/admin/intros`);
       setIntros(data.response);
     } catch {
       toast.error('Failed to fetch intros');
     }
-  };
+  },[])
 
   useEffect(() => {
     fetchIntros();
-  }, []);
+  }, [fetchIntros]);
 
   const handleDelete = async (id: string) => {
     setProcessing(true);

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Project } from '@/types/project';
 import { toast } from 'sonner';
 import Modal from '@/component/Modal';
@@ -21,6 +21,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+  const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
 export default function ProjectsAdmin() {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -28,9 +29,9 @@ export default function ProjectsAdmin() {
     const [showModal, setShowModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [processing, setProcessing] = useState(false);
-    const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+  
 
-    const fetchProjects = async () => {
+    const fetchProjects = useCallback(async () => {
         try {
             const { data } = await axios.get(`${API_BASE}/admin/projects`);
             console.log(data.response);
@@ -38,11 +39,11 @@ export default function ProjectsAdmin() {
         } catch {
             toast.error('Failed to fetch projects');
         }
-    };
+    },[]);
 
     useEffect(() => {
         fetchProjects();
-    }, []);
+    }, [fetchProjects]);
 
     const handleDelete = async (id: string) => {
         setProcessing(true);

@@ -1,6 +1,6 @@
 // components/admin/ContactAdmin.tsx
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
 import Modal from '@/component/Modal';
 import ContactForm from '@/component/admin/ContactForm';
@@ -33,26 +33,28 @@ interface Contact {
     updatedAt?: string;
 }
 
+const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+
 export default function ContactAdmin() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+  
 
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     try {
       const { data } = await axios.get(`${API_BASE}/contacts`);
       setContacts(data.response);
     } catch {
       toast.error('Failed to fetch contacts');
     }
-  };
-
+  },[])
+  
   useEffect(() => {
     fetchContacts();
-  }, []);
+  }, [fetchContacts]);
 
   const handleFormSubmit = async () => {
     setShowModal(false);

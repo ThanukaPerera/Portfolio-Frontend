@@ -46,7 +46,7 @@
 
 
 import { Montserrat } from 'next/font/google';
-import { motion } from 'framer-motion';
+import { easeOut, motion } from 'framer-motion';
 
 type SectionTitleProps = {
   title: string;
@@ -73,7 +73,7 @@ const letterVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, ease: "easeOut" },
+    transition: { duration: 0.4, ease: easeOut },
   },
 };
 
@@ -83,7 +83,7 @@ const descriptionVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut", delay: 0.5 }, // staged delay
+    transition: { duration: 0.6, ease: easeOut, delay: 0.5 }, // staged delay
   },
 };
 

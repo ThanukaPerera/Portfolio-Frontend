@@ -63,17 +63,17 @@ async function getProjects() {
   }
 }
 
-async function getAchievements() {
-  try {
-    const res = await axios.get(`${API_BASE}/achievements`, {
-      headers: { "Cache-Control": "no-store" },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch achievements");
-  }
-}
+// async function getAchievements() {
+//   try {
+//     const res = await axios.get(`${API_BASE}/achievements`, {
+//       headers: { "Cache-Control": "no-store" },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Failed to fetch achievements");
+//   }
+// }
 
 async function getContacts() {
   try {
@@ -92,7 +92,6 @@ export default async function Home() {
     getIntros(),
     getAboutMes(),
     getProjects(),
-    getAchievements(),
     getContacts(),
   ]);
 

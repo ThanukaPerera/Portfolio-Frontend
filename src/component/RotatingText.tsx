@@ -1,7 +1,11 @@
 import { RotatingText } from '@/components/ui/shadcn-io/rotating-text';
 
-const RotatingTextDemo = (data) => {
-  const arr = data.data.split("|").map(item => item.trim());
+interface RotatingTextDemoProps {
+  data: string;
+}
+
+const RotatingTextDemo = ({ data }: RotatingTextDemoProps) => {
+  const arr = data.split("|").map(item => item.trim());
   console.log(arr);
   
   return (

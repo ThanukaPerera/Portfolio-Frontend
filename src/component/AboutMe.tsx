@@ -291,7 +291,7 @@
 
 
 'use client';
-import { motion } from 'framer-motion';
+import { motion,easeOut, Transition,easeInOut  } from 'framer-motion';
 import SectionTitle from '../component/SectionTitle';
 import { Montserrat } from 'next/font/google';
 
@@ -327,7 +327,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: easeInOut,
     },
   },
 };
@@ -339,7 +339,7 @@ const lottieVariants = {
     opacity: 1,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: easeOut,
     },
   },
 };
@@ -350,8 +350,8 @@ const textVariants = {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.6,
-      ease: "easeOut",
+      duration: 0.5,
+      ease: "easeInOut" as Transition["ease"],
     },
   },
 };

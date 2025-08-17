@@ -401,10 +401,7 @@ const floatingVariants: Variants = {
 
 // Main Intro component
 const Intro = memo<IntroProps>(({ data, className }) => {
-  if (!data) {
-    console.warn("Intro component: No data provided");
-    return null;
-  }
+  
 
   const { fname, lname, welcomeText, title, tagline, resumeLink, imgLink } =
     data;
@@ -413,6 +410,11 @@ const Intro = memo<IntroProps>(({ data, className }) => {
     () => `${fullName} - Professional Portrait`,
     [fullName]
   );
+
+  if (!data) {
+    console.warn("Intro component: No data provided");
+    return null;
+  }
 
   return (
     <section

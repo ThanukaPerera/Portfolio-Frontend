@@ -36,7 +36,7 @@
 
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion,Transition} from 'framer-motion';
 
 interface ButtonProps {
   text: string;
@@ -44,6 +44,17 @@ interface ButtonProps {
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
+}
+
+
+const animationProps: {
+  whileHover: { scale: number };
+  whileTap: { scale: number };
+  transition: Transition;
+} = {
+  whileHover: { scale: 1.05 },
+  whileTap: { scale: 0.95 },
+  transition: { type: "spring", stiffness: 300 },
 }
 
 const baseClasses = `flex justify-center items-center border-2 border-primaryColor rounded-md px-4 py-2 text-primaryColor cursor-pointer hover:bg-primaryColor hover:text-secondaryColor transition-all duration-200 hover:border-secondaryColor`;
@@ -60,11 +71,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const combinedClasses = `${baseClasses} ${className}`.trim();
 
-  const animationProps = {
-    whileHover: { scale: 1.05 },
-    whileTap: { scale: 0.95 },
-    transition: { type: 'spring', stiffness: 300 },
-  };
+
 
   if (link) {
     return (

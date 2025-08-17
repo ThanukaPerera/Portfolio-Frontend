@@ -1,18 +1,24 @@
-'use client'
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ImageUpload } from '@/component/admin/ImageUpload';
-import { toast } from 'sonner';
-import Modal from '@/component/Modal';
-import axios from 'axios';
-import { Switch } from '@/components/ui/switch';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
-import Image from 'next/image';
+"use client";
+import { useState, useEffect,useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ImageUpload } from "@/component/admin/ImageUpload";
+import { toast } from "sonner";
+import Modal from "@/component/Modal";
+import axios from "axios";
+import { Switch } from "@/components/ui/switch";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import Image from "next/image";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +29,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 
 // Achievement type based on your schema
 interface Achievement {
@@ -38,52 +44,55 @@ interface Achievement {
 
 // Validation Schema
 const achievementSchema = z.object({
-  achievementtitle: z.string().min(3, "Achievement title must be at least 3 characters"),
+  achievementtitle: z
+    .string()
+    .min(3, "Achievement title must be at least 3 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   date: z.string().min(1, "Date is required"),
   certification: z.string().optional(),
   imgLink: z.array(z.string()).optional(),
-  active: z.boolean()
+  active: z.boolean(),
 });
 
 type AchievementFormValues = z.infer<typeof achievementSchema>;
-
+const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 export default function AchievementsAdmin() {
   // State for data fetching and modal management
   const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
+  const [selectedAchievement, setSelectedAchievement] =
+    useState<Achievement | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
-  
-  // Data fetching functions
-  const fetchAchievements = async () => {
+
+  const fetchAchievements = useCallback(async () => {
     try {
       const { data } = await axios.get(`${API_BASE}/achievements`);
       setAchievements(data.response);
     } catch (error) {
       console.error(error);
-      toast.error('Failed to fetch achievements');
+      toast.error("Failed to fetch achievements");
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchAchievements();
-  }, []);
+  }, [fetchAchievements]);
 
   const handleDelete = async (id: string) => {
     setProcessing(true);
     try {
       await axios.delete(`${API_BASE}/achievement/${id}`);
-      toast.success('Achievement deleted successfully');
+      toast.success("Achievement deleted successfully");
       fetchAchievements();
     } catch (error) {
       console.error(error);
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || 'Failed to delete achievement');
+        toast.error(
+          error.response?.data?.message || "Failed to delete achievement"
+        );
       } else {
-        toast.error('Failed to delete achievement');
+        toast.error("Failed to delete achievement");
       }
     } finally {
       setProcessing(false);
@@ -93,22 +102,25 @@ export default function AchievementsAdmin() {
   const handleToggleActive = async (id: string) => {
     setProcessing(true);
     try {
-      const updatedAchievements = achievements.map(achievement => 
-        achievement._id === id ? { ...achievement, active: !achievement.active } : achievement
+      const updatedAchievements = achievements.map((achievement) =>
+        achievement._id === id
+          ? { ...achievement, active: !achievement.active }
+          : achievement
       );
       setAchievements(updatedAchievements);
 
       await axios.patch(`${API_BASE}/achievement/${id}/status`, {
-        active: !achievements.find(achievement => achievement._id === id)?.active
+        active: !achievements.find((achievement) => achievement._id === id)
+          ?.active,
       });
-      
-      toast.success('Status updated');
+
+      toast.success("Status updated");
     } catch (error) {
       console.error(error);
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || 'Failed to update status');
+        toast.error(error.response?.data?.message || "Failed to update status");
       } else {
-        toast.error('Failed to update status');
+        toast.error("Failed to update status");
       }
       fetchAchievements();
     } finally {
@@ -117,17 +129,28 @@ export default function AchievementsAdmin() {
   };
 
   // Form component
-  const AchievementForm = ({ initialData }: { initialData?: Achievement | null }) => {
-    const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<AchievementFormValues>({
+  const AchievementForm = ({
+    initialData,
+  }: {
+    initialData?: Achievement | null;
+  }) => {
+    const {
+      register,
+      handleSubmit,
+      reset,
+      setValue,
+      watch,
+      formState: { errors, isSubmitting },
+    } = useForm<AchievementFormValues>({
       resolver: zodResolver(achievementSchema),
       defaultValues: {
-        achievementtitle: initialData?.achievementtitle || '',
-        description: initialData?.description || '',
-        date: initialData?.date ? initialData.date.split('T')[0] : '',
-        certification: initialData?.certification || '',
+        achievementtitle: initialData?.achievementtitle || "",
+        description: initialData?.description || "",
+        date: initialData?.date ? initialData.date.split("T")[0] : "",
+        certification: initialData?.certification || "",
         imgLink: initialData?.imgLink || [],
-        active: initialData?.active ?? true
-      }
+        active: initialData?.active ?? true,
+      },
     });
 
     const watchedImages = watch("imgLink") || [];
@@ -138,16 +161,16 @@ export default function AchievementsAdmin() {
         reset({
           achievementtitle: initialData.achievementtitle,
           description: initialData.description,
-          date: initialData.date.split('T')[0], // Format date for input
-          certification: initialData.certification || '',
+          date: initialData.date.split("T")[0], // Format date for input
+          certification: initialData.certification || "",
           imgLink: initialData.imgLink || [],
-          active: initialData.active
+          active: initialData.active,
         });
       }
     }, [initialData, reset]);
 
     const handleImageChange = (urls: string[]) => {
-      setValue('imgLink', urls);
+      setValue("imgLink", urls);
     };
 
     const handleFormSubmit = async (data: AchievementFormValues) => {
@@ -156,23 +179,31 @@ export default function AchievementsAdmin() {
         const formData = {
           ...data,
           date: new Date(data.date).toISOString(),
-          imgLink: data.imgLink || []
+          imgLink: data.imgLink || [],
         };
 
         if (isEditing && selectedAchievement) {
-          await axios.put(`${API_BASE}/achievement/${selectedAchievement._id}`, formData);
+          await axios.put(
+            `${API_BASE}/achievement/${selectedAchievement._id}`,
+            formData
+          );
         } else {
           await axios.post(`${API_BASE}/addAchievement`, formData);
         }
-        toast.success(`Achievement ${isEditing ? 'updated' : 'created'}`);
+        toast.success(`Achievement ${isEditing ? "updated" : "created"}`);
         setShowModal(false);
         fetchAchievements();
       } catch (error) {
         console.error(error);
         if (axios.isAxiosError(error)) {
-          toast.error(error.response?.data?.message || `Failed to ${isEditing ? 'update' : 'create'} achievement`);
+          toast.error(
+            error.response?.data?.message ||
+              `Failed to ${isEditing ? "update" : "create"} achievement`
+          );
         } else {
-          toast.error(`Failed to ${isEditing ? 'update' : 'create'} achievement`);
+          toast.error(
+            `Failed to ${isEditing ? "update" : "create"} achievement`
+          );
         }
       } finally {
         setProcessing(false);
@@ -186,12 +217,14 @@ export default function AchievementsAdmin() {
           <Label htmlFor="achievementtitle">Achievement Title *</Label>
           <Input
             id="achievementtitle"
-            {...register('achievementtitle')}
+            {...register("achievementtitle")}
             placeholder="Enter achievement title..."
             className="w-full"
           />
           {errors.achievementtitle && (
-            <p className="text-red-500 text-sm mt-1">{errors.achievementtitle.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.achievementtitle.message}
+            </p>
           )}
         </div>
 
@@ -200,12 +233,14 @@ export default function AchievementsAdmin() {
           <Label htmlFor="description">Description *</Label>
           <textarea
             id="description"
-            {...register('description')}
+            {...register("description")}
             className="w-full p-2 border rounded min-h-[100px] resize-y"
             placeholder="Describe your achievement..."
           />
           {errors.description && (
-            <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.description.message}
+            </p>
           )}
         </div>
 
@@ -215,7 +250,7 @@ export default function AchievementsAdmin() {
           <Input
             id="date"
             type="date"
-            {...register('date')}
+            {...register("date")}
             className="w-full"
           />
           {errors.date && (
@@ -225,15 +260,19 @@ export default function AchievementsAdmin() {
 
         {/* Certification */}
         <div className="space-y-2">
-          <Label htmlFor="certification">Certification/Recognition (Optional)</Label>
+          <Label htmlFor="certification">
+            Certification/Recognition (Optional)
+          </Label>
           <Input
             id="certification"
-            {...register('certification')}
+            {...register("certification")}
             placeholder="e.g., Certificate ID, Institution name..."
             className="w-full"
           />
           {errors.certification && (
-            <p className="text-red-500 text-sm mt-1">{errors.certification.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.certification.message}
+            </p>
           )}
         </div>
 
@@ -247,7 +286,8 @@ export default function AchievementsAdmin() {
             disabled={isSubmitting}
           />
           <p className="text-sm text-gray-500">
-            Upload images related to your achievement (certificates, photos, etc.)
+            Upload images related to your achievement (certificates, photos,
+            etc.)
           </p>
         </div>
 
@@ -255,11 +295,14 @@ export default function AchievementsAdmin() {
         <div className="flex items-center space-x-2">
           <input
             type="checkbox"
-            {...register('active')}
+            {...register("active")}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             id="active-status"
           />
-          <Label htmlFor="active-status" className="text-sm font-medium text-gray-700">
+          <Label
+            htmlFor="active-status"
+            className="text-sm font-medium text-gray-700"
+          >
             Display Achievement
           </Label>
         </div>
@@ -274,12 +317,8 @@ export default function AchievementsAdmin() {
           >
             Cancel
           </Button>
-          <Button
-            type="submit"
-            variant="default"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Saving...' : (initialData ? 'Update' : 'Create')}
+          <Button type="submit" variant="default" disabled={isSubmitting}>
+            {isSubmitting ? "Saving..." : initialData ? "Update" : "Create"}
           </Button>
         </div>
       </form>
@@ -287,10 +326,10 @@ export default function AchievementsAdmin() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -315,7 +354,9 @@ export default function AchievementsAdmin() {
           <Card key={achievement._id} className="relative">
             <CardHeader>
               <div className="flex justify-between items-start">
-                <CardTitle className="line-clamp-2">{achievement.achievementtitle}</CardTitle>
+                <CardTitle className="line-clamp-2">
+                  {achievement.achievementtitle}
+                </CardTitle>
                 <Switch
                   checked={achievement.active}
                   onCheckedChange={() => handleToggleActive(achievement._id)}
@@ -326,24 +367,28 @@ export default function AchievementsAdmin() {
                 {formatDate(achievement.date)}
               </p>
             </CardHeader>
-            
+
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <p className="text-muted-foreground text-sm line-clamp-3">
                   {achievement.description}
                 </p>
               </div>
-              
+
               {achievement.certification && (
                 <div className="space-y-2">
                   <p className="font-medium text-sm">Certification:</p>
-                  <p className="text-muted-foreground text-sm">{achievement.certification}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {achievement.certification}
+                  </p>
                 </div>
               )}
 
               {achievement.imgLink && achievement.imgLink.length > 0 && (
                 <div className="space-y-2">
-                  <p className="font-medium text-sm">Images ({achievement.imgLink.length}):</p>
+                  <p className="font-medium text-sm">
+                    Images ({achievement.imgLink.length}):
+                  </p>
                   <div className="grid grid-cols-3 gap-2">
                     {achievement.imgLink.slice(0, 3).map((img, index) => (
                       <div key={index} className="relative w-full h-16">
@@ -379,7 +424,7 @@ export default function AchievementsAdmin() {
               >
                 Edit
               </Button>
-              
+
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="destructive" disabled={processing}>
@@ -390,7 +435,9 @@ export default function AchievementsAdmin() {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete the achievement &ldquo;{achievement.achievementtitle}&rdquo;.
+                      This action cannot be undone. This will permanently delete
+                      the achievement &ldquo;{achievement.achievementtitle}
+                      &rdquo;.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -399,7 +446,7 @@ export default function AchievementsAdmin() {
                       onClick={() => handleDelete(achievement._id)}
                       disabled={processing}
                     >
-                      {processing ? 'Deleting...' : 'Continue'}
+                      {processing ? "Deleting..." : "Continue"}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -411,13 +458,15 @@ export default function AchievementsAdmin() {
 
       {achievements.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No achievements found. Create your first achievement!</p>
+          <p className="text-gray-500 text-lg">
+            No achievements found. Create your first achievement!
+          </p>
         </div>
       )}
 
       <Modal show={showModal} onClose={() => setShowModal(false)}>
         <h2 className="text-xl font-bold mb-4">
-          {isEditing ? 'Edit Achievement' : 'Create New Achievement'}
+          {isEditing ? "Edit Achievement" : "Create New Achievement"}
         </h2>
         <AchievementForm initialData={selectedAchievement} />
       </Modal>

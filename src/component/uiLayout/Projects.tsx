@@ -1262,17 +1262,17 @@ const borderColors = [
   "rgba(156, 163, 175, 0.3)", // Light Gray
 ];
 
-const headerVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
-};
+// const headerVariants = {
+//   hidden: { opacity: 0, y: 50 },
+//   visible: {
+//     opacity: 1,
+//     y: 0,
+//     transition: {
+//       duration: 0.8,
+//       ease: "easeOut",
+//     },
+//   },
+// };
 
 export default function Projects({
   data,
@@ -1443,7 +1443,6 @@ export const Card: React.FC<CardProps> = ({
   project,
   title,
   description,
-  src,
   url,
   cardColor,
   borderColor,
