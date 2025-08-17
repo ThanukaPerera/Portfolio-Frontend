@@ -265,7 +265,6 @@ const categorizeSkills = (skills: string[] = []) => {
 };
 
 export default function Skills( {data} : SkillsProps) {
-  console.log("Skills Data:", data);
   if (!data || !data.skills || data.skills.length === 0) return <div className="text-white">No skills available</div>;
 
   const categorized = categorizeSkills(data.skills);
