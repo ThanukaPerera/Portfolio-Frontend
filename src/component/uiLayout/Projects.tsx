@@ -551,10 +551,10 @@ export default function Projects({
 
   return (
     <>
-      <main ref={container} className="max-w-5xl mx-auto">
+      <main ref={container} className="max-w-4xl mx-auto">
         {/* Projects Section - Two Columns */}
         <section className="relative px-6 md:px-12 mb-30 ">
-          <div className="max-w-5xl mx-auto">
+          <div className="w-full mx-auto">
             <div className="mb-16">
               <SectionTitle
                 title="Featured Projects"
