@@ -137,8 +137,8 @@ const AchievementDialog: React.FC<AchievementDialogProps> = ({ achievement, isOp
         }}
       >
         {/* Enhanced border with gradient */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 rounded-xl opacity-50" />
-        <div className="relative bg-black/90 rounded-xl overflow-hidden w-md">
+        <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 rounded-xl opacity-50 w-full" />
+        <div className="relative bg-black/90 rounded-xl overflow-hidden w-md sm:w-full">
           <div className="flex flex-col max-h-[90vh] w-full">
             <div className="px-6 lg:px-8 pt-6 pb-4 border-b border-slate-700/50 flex-shrink-0">
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
