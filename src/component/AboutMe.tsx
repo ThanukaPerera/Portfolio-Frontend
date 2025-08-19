@@ -358,7 +358,7 @@ const textVariants = {
 
 export default function AboutMe({ data }: AboutMeProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden max-w-5xl">
+    <div className="relative min-h-screen overflow-hidden max-w-5xl mx-auto">
       {/* Subtle floating elements */}
       <motion.div
         className="absolute top-32 right-20 w-20 h-20 bg-gradient-to-br from-orange-500/8 to-red-500/8 rounded-full blur-xl"

@@ -7,7 +7,7 @@ import Projects from "@/component/uiLayout/Projects";
 import axios from "axios";
 import Footer from "@/component/uiLayout/Footer";
 import ScrollingSection from "@/component/uiLayout/ScrollingSection";
-
+import TimelineNav from "@/component/TimelineNav";
 import { Poppins } from "next/font/google";
 import ContactDisplay from "@/component/Contact";
 import FooterName from "@/component/FooterName";
@@ -115,16 +115,46 @@ export default async function Home() {
         <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-br from-orange-500/15 to-orange-300/15 rounded-full blur-xl animate-float-slow" />
       </div>
 
+      <TimelineNav />
       {/* Content sections - now with transparent/minimal backgrounds */}
       <div className="w-full bg-transparent relative z-20 flex flex-col items-center justify-center">
-        <Intro data={introData.response[0]} />
+        {/* <Intro data={introData.response[0]} />
         <AboutMe data={aboutData.response[0]} />
         <Skills data={aboutData.response[0]} />
         <Projects data={projectData.response} />
         <ScrollingSection />
         <ContactDisplay data={contactData.response[0]} />
         <FooterName />
-        <Footer data={introData.response[0]} />
+        <Footer data={introData.response[0]} /> */}
+
+        <section id="intro" className="w-full">
+          <Intro data={introData.response[0]} />
+        </section>
+        
+        <section id="about" className="w-full">
+          <AboutMe data={aboutData.response[0]} />
+        </section>
+        
+        <section id="skills" className="w-full">
+          <Skills data={aboutData.response[0]} />
+        </section>
+        
+        <section id="projects" className="w-full">
+          <Projects data={projectData.response} />
+        </section>
+        
+        <section id="scrolling" className="w-full">
+          <ScrollingSection />
+        </section>
+        
+        <section id="contact" className="w-full">
+          <ContactDisplay data={contactData.response[0]} />
+        </section>
+        
+        <section id="footer" className="w-full">
+          <FooterName />
+          <Footer data={introData.response[0]} />
+        </section>
 
       </div>
     </div>

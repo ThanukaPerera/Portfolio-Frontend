@@ -156,7 +156,7 @@ function Footer({ data }: FooterProps) {
       {/* Floating Elements */}
       
       <motion.div
-        className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-xl"
+        className="absolute top-10 sm:top-20 left-4 sm:left-20 w-16 sm:w-32 h-16 sm:h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-xl"
         animate={{
           x: [0, 20, 0],
           y: [0, -15, 0],
@@ -168,7 +168,7 @@ function Footer({ data }: FooterProps) {
         }}
       />
       <motion.div
-        className="absolute bottom-40 right-20 w-24 h-24 bg-gradient-to-br from-pink-500/10 to-orange-500/10 rounded-full blur-xl"
+        className="absolute bottom-20 sm:bottom-40 right-4 sm:right-20 w-12 sm:w-24 h-12 sm:h-24 bg-gradient-to-br from-pink-500/10 to-orange-500/10 rounded-full blur-xl"
         animate={{
           x: [0, -15, 0],
           y: [0, 10, 0],
@@ -188,25 +188,25 @@ function Footer({ data }: FooterProps) {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="max-w-7xl mx-auto px-8 pt-24 pb-16"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-24 pb-8 sm:pb-12 lg:pb-16"
         >
           {/* Section Header */}
           <motion.div
             variants={itemVariants}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12 lg:mb-16"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-700 rounded-full border border-slate-600/50 mb-6">
+            {/* <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-700 rounded-full border border-slate-600/50 mb-6">
               <span className="w-2 h-2 bg-gradient-to-r from-orange-500  to-orange-400 rounded-full animate-pulse" />
               <span className="text-slate-300 text-sm font-medium">Let&apos;s Connect</span>
-            </div>
+            </div> */}
 
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 px-2">
               Ready to{' '}
               <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-orange-800 bg-clip-text text-transparent">
                 collaborate?
               </span>
             </h2>
-            <p className="text-slate-400 text-md max-w-2xl mx-auto">
+            <p className="text-slate-400 text-sm sm:text-base md:text-md max-w-2xl mx-auto px-4">
               Let&apos;s bring your ideas to life with exceptional design and development
             </p>
           </motion.div>
@@ -214,11 +214,11 @@ function Footer({ data }: FooterProps) {
           {/* Motto Section */}
           <motion.div
             variants={mottoVariants}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12 lg:mb-16"
           >
-            <div className="relative">
+            <div className="relative px-2 sm:px-4">
               <AnimatedText
-                className={`text-4xl md:text-6xl lg:text-8xl font-bold leading-tight ${montserrat.className}`}
+                className={`text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight ${montserrat.className}`}
                 motto={data?.motto}
               />
               {/* Subtle glow effect */}
@@ -227,7 +227,7 @@ function Footer({ data }: FooterProps) {
           </motion.div>
 
           {/* Social Media Links */}
-          <motion.div variants={itemVariants} className="w-sm mx-auto sm:w-4xl">
+          <motion.div variants={itemVariants} className="w-full max-w-sm sm:max-w-2xl lg:max-w-4xl mx-auto px-4">
             <SocialMediaLinks />
           </motion.div>
 
@@ -237,10 +237,10 @@ function Footer({ data }: FooterProps) {
         {/* Separator with Sparkles */}
         <div className="relative w-full overflow-hidden">
           {/* Gradient Lines */}
-          <div className="relative h-24 w-full">
-            <div className="absolute inset-x-0 top-8 bg-gradient-to-r from-transparent via-slate-600/50 to-transparent h-[2px] w-3/4 mx-auto blur-sm" />
-            <div className="absolute inset-x-0 top-8 bg-gradient-to-r from-transparent via-slate-500/70 to-transparent h-px w-3/4 mx-auto" />
-            <div className="absolute inset-x-0 top-8 bg-gradient-to-r from-transparent via-slate-300/90 to-transparent h-px w-1/2 mx-auto" />
+          <div className="relative h-16 sm:h-20 lg:h-24 w-full">
+            <div className="absolute inset-x-0 top-6 sm:top-8 bg-gradient-to-r from-transparent via-slate-600/50 to-transparent h-[2px] w-4/5 sm:w-3/4 mx-auto blur-sm" />
+            <div className="absolute inset-x-0 top-6 sm:top-8 bg-gradient-to-r from-transparent via-slate-500/70 to-transparent h-px w-4/5 sm:w-3/4 mx-auto" />
+            <div className="absolute inset-x-0 top-6 sm:top-8 bg-gradient-to-r from-transparent via-slate-300/90 to-transparent h-px w-3/5 sm:w-1/2 mx-auto" />
           </div>
 
           {/* Sparkles Effect */}
