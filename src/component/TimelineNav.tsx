@@ -3,11 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, User, Code, FolderOpen, Mail, Home, Award, MessageCircle } from 'lucide-react';
 
-const TimelineNav = () => {
-  const [activeSection, setActiveSection] = useState('intro');
-  const [isVisible, setIsVisible] = useState(false);
 
-  const navItems = [
+
+ const navItems = [
     { id: 'intro', label: 'Home', icon: Home, color: 'orange' },
     { id: 'about', label: 'About', icon: User, color: 'gray' },
     { id: 'skills', label: 'Skills', icon: Code, color: 'orange' },
@@ -17,6 +15,11 @@ const TimelineNav = () => {
     { id: 'footer', label: 'Connect', icon: MessageCircle, color: 'orange' },
   ];
 
+const TimelineNav = () => {
+  const [activeSection, setActiveSection] = useState('intro');
+  const [isVisible, setIsVisible] = useState(false);
+
+ 
   useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 100);
@@ -39,7 +42,7 @@ const TimelineNav = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId:string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       const offsetTop = element.offsetTop - 80;
@@ -62,7 +65,7 @@ const TimelineNav = () => {
           
           {/* Navigation Items */}
           <div className="space-y-6">
-            {navItems.map((item, index) => {
+            {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
               const isOrange = item.color === 'orange';

@@ -5,56 +5,55 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState, useCallback, useMemo } from "react";
 import Image from "next/image";
 import SectionTitle from "../SectionTitle";
-import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { ExternalLink, Award, Calendar, MapPin, Building2 } from "lucide-react";
 
 // Add custom styles for the dialog
-const dialogStyles = `
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(156, 163, 175, 0.4) rgba(0, 0, 0, 0.2);
-  }
+// const dialogStyles = `
+//   .custom-scrollbar {
+//     scrollbar-width: thin;
+//     scrollbar-color: rgba(156, 163, 175, 0.4) rgba(0, 0, 0, 0.2);
+//   }
   
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 10px;
-  }
+//   .custom-scrollbar::-webkit-scrollbar {
+//     width: 10px;
+//   }
   
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-  }
+//   .custom-scrollbar::-webkit-scrollbar-track {
+//     background: rgba(0, 0, 0, 0.2);
+//     border-radius: 6px;
+//   }
   
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(156, 163, 175, 0.4);
-    border-radius: 6px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-  }
+//   .custom-scrollbar::-webkit-scrollbar-thumb {
+//     background: rgba(156, 163, 175, 0.4);
+//     border-radius: 6px;
+//     border: 2px solid transparent;
+//     background-clip: content-box;
+//   }
   
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(156, 163, 175, 0.6);
-    background-clip: content-box;
-  }
+//   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+//     background: rgba(156, 163, 175, 0.6);
+//     background-clip: content-box;
+//   }
   
-  .custom-scrollbar::-webkit-scrollbar-thumb:active {
-    background: rgba(156, 163, 175, 0.8);
-    background-clip: content-box;
-  }
+//   .custom-scrollbar::-webkit-scrollbar-thumb:active {
+//     background: rgba(156, 163, 175, 0.8);
+//     background-clip: content-box;
+//   }
   
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+//   .scrollbar-hide {
+//     -ms-overflow-style: none;
+//     scrollbar-width: none;
+//   }
   
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+//   .scrollbar-hide::-webkit-scrollbar {
+//     display: none;
+//   }
   
-  .dialog-backdrop {
-    backdrop-filter: blur(20px);
-  }
-`;
+//   .dialog-backdrop {
+//     backdrop-filter: blur(20px);
+//   }
+// `;
 
 // Achievement Dialog Component
 interface AchievementDialogProps {

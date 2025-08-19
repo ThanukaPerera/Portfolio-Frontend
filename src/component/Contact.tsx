@@ -1,170 +1,4 @@
 
-// 'use client'
-// import { motion, type Variants } from 'framer-motion';
-// import { memo } from 'react';
-// import SectionTitle from './SectionTitle';
-
-// interface ContactProps {
-//   data: {
-//     _id: string;
-//     name: string;
-//     bday?: string | null;
-//     email: string;
-//     mobile?: string;
-//     address?: string;
-//     active: boolean;
-//   };
-// }
-
-// // Optimized animation variants
-// const containerVariants: Variants = {
-//   hidden: { opacity: 0 },
-//   visible: {
-//     opacity: 1,
-//     transition: {
-//       delayChildren: 0.2,
-//       staggerChildren: 0.1,
-//     },
-//   },
-// };
-
-// const itemVariants: Variants = {
-//   hidden: { opacity: 0, y: 20 },
-//   visible: {
-//     opacity: 1,
-//     y: 0,
-//     transition: {
-//       duration: 0.6,
-//       ease: [0.25, 0.46, 0.45, 0.94], // Custom easing curve
-//     },
-//   },
-// };
-
-// const cardVariants: Variants = {
-//   hidden: { opacity: 0, scale: 0.95 },
-//   visible: {
-//     opacity: 1,
-//     scale: 1,
-//     transition: {
-//       duration: 0.7,
-//       ease: [0.25, 0.46, 0.45, 0.94],
-//     },
-//   },
-// };
-
-// const Contact = memo(function Contact({ data }: ContactProps) {
-//   if (!data) return null;
-
-//   return (
-//     <div className="relative overflow-hidden py-20">
-//       {/* Optimized floating elements with will-change */}
-//       <motion.div
-//         className="absolute top-32 right-24 w-24 h-24 bg-gradient-to-br from-orange-500/8 to-red-500/8 rounded-full blur-xl"
-//         style={{ willChange: 'transform' }}
-//         animate={{
-//           x: [0, -15, 0],
-//           y: [0, 10, 0],
-//         }}
-//         transition={{
-//           duration: 8,
-//           repeat: Infinity,
-//           ease: "easeInOut",
-//         }}
-//       />
-//       <motion.div
-//         className="absolute bottom-32 left-24 w-20 h-20 bg-gradient-to-br from-red-500/6 to-orange-500/6 rounded-full blur-2xl"
-//         style={{ willChange: 'transform' }}
-//         animate={{
-//           x: [0, 12, 0],
-//           y: [0, -8, 0],
-//         }}
-//         transition={{
-//           duration: 10,
-//           repeat: Infinity,
-//           ease: "easeInOut",
-//         }}
-//       />
-
-//       {/* Main Content */}
-//       <div className="relative z-10 max-w-6xl mx-auto px-8 max-sm:px-6">
-        
-//         <motion.div 
-//           className="mb-16"
-//           initial={{ opacity: 0, y: -20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6 }}
-//         >
-//           <SectionTitle title="Let’s Build Something Great" />
-//         </motion.div>
-
-//         {/* Contact Cards Grid */}
-        
-//         <motion.div
-//           variants={containerVariants}
-//           initial="hidden"
-//           animate="visible"
-//           className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12"
-//         >
-//           {/* Personal Information Card */}
-//         </motion.div>
-
-//         {/* Call to Action */}
-//         <motion.div
-//           variants={itemVariants}
-//           initial="hidden"
-//           animate="visible"
-//           className="text-center"
-//         >
-//           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-md">
-
-//             <p className="text-white text-sm">Have an idea or a vision you want to turn into reality? I’d love to help make it happen.</p>
-//             <motion.a
-//               href={`mailto:${data.email}`}
-//               className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-700 text-white px-8 py-4 rounded-xl font-semibold shadow-2xl transition-all duration-300"
-//               whileHover={{ 
-//                 boxShadow: "0 0 40px rgba(249, 115, 22, 0.4), 0 0 80px rgba(239, 68, 68, 0.2)",
-//                 scale: 1.05 
-//               }}
-//               whileTap={{ scale: 0.95 }}
-//             >
-//               Get in Touch &rarr;
-//             </motion.a>
-//           </div>
-//         </motion.div>
-//       </div>
-
-//       {/* Optimized decorative accents */}
-//       <motion.div
-//         className="absolute top-1/3 left-8 w-6 h-6 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full"
-//         style={{ willChange: 'transform' }}
-//         animate={{
-//           scale: [1, 1.3, 1],
-//           opacity: [0.5, 1, 0.5],
-//         }}
-//         transition={{
-//           duration: 4,
-//           repeat: Infinity,
-//           ease: "easeInOut",
-//         }}
-//       />
-//       <motion.div
-//         className="absolute bottom-1/3 right-8 w-4 h-4 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-sm rotate-45"
-//         style={{ willChange: 'transform' }}
-//         animate={{
-//           rotate: [45, 75, 45],
-//         }}
-//         transition={{
-//           duration: 6,
-//           repeat: Infinity,
-//           ease: "easeInOut",
-//         }}
-//       />
-//     </div>
-//   );
-// });
-
-// export default Contact;
-
 
 
 
@@ -209,18 +43,18 @@ const itemVariants: Variants = {
   },
 };
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.9, y: 40 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
+// const cardVariants: Variants = {
+//   hidden: { opacity: 0, scale: 0.9, y: 40 },
+//   visible: {
+//     opacity: 1,
+//     scale: 1,
+//     y: 0,
+//     transition: {
+//       duration: 0.8,
+//       ease: [0.25, 0.46, 0.45, 0.94],
+//     },
+//   },
+// };
 
 const glowVariants: Variants = {
   animate: {
@@ -291,14 +125,15 @@ export default function Contact({ data }: ContactProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <SectionTitle title="Let’s Create Together" />
-          <motion.p 
+          <SectionTitle title="Let&apos;s Create Together" />
+
+          <motion.p
             className="text-gray-400 sm:text-md text-sm mt-6 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Ready to transform your ideas into digital reality? Let's collaborate and create something extraordinary together.
+            Ready to transform your ideas into digital reality? Let&apos;s collaborate and create something extraordinary together.
           </motion.p>
         </motion.div>
 
