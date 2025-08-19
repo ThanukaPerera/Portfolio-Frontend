@@ -26,6 +26,7 @@ const poppins = Poppins({
 // });
 
 const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+console.log(API_BASE);
 
 async function getIntros() {
   try {
