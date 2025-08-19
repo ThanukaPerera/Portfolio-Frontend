@@ -9,7 +9,23 @@ import { Button } from "@/components/ui/button";
 import SectionTitle from "@/component/SectionTitle";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Achievement = any;
+interface Achievement {
+  _id: string;
+  achievementtitle: string;
+  active: boolean;
+  certification?: string;
+  date?: string; // ISO date string
+  description?: string;
+  imgLink?: string[];
+  updatedAt?: string;
+
+  // optional extra fields your backend may return
+  organization?: string;
+  location?: string;
+  category?: string;
+  link?: string;
+}
+
 
 const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
@@ -30,6 +46,7 @@ export default function ScrollingSection(): React.ReactElement {
         });
 
         setAchievementData(achievementRes.data.response);
+        console.log("Achievement Data:", achievementRes.data.response);
       } catch (err) {
         console.error("Error fetching data:", err);
       }
@@ -71,7 +88,7 @@ export default function ScrollingSection(): React.ReactElement {
   }, [achievementData]);
 
   // Memoize dialog handlers - MUST be before early return
-  const openAchievementDialog = useCallback((achievement: any) => {
+  const openAchievementDialog = useCallback((achievement: Achievement) => {
     setSelectedAchievement(achievement);
     setIsDialogOpen(true);
     lenisRef.current?.stop();
