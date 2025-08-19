@@ -1,13 +1,12 @@
-
-
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Lenis from "@studio-freight/lenis";
 import axios from "axios";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import SectionTitle from "@/component/SectionTitle";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Achievement = any;
@@ -59,31 +58,38 @@ export default function ScrollingSection(): React.ReactElement {
     };
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const openAchievementDialog = (achievement: any) => {
+  // Memoize split arrays for efficiency - MUST be before early return
+  const { leftColumnAchievements, rightColumnAchievements } = useMemo(() => {
+    if (!achievementData || achievementData.length === 0) {
+      return { leftColumnAchievements: [], rightColumnAchievements: [] };
+    }
+    const midpoint = Math.ceil(achievementData.length / 2);
+    return {
+      leftColumnAchievements: achievementData.slice(midpoint),
+      rightColumnAchievements: achievementData.slice(0, midpoint)
+    };
+  }, [achievementData]);
+
+  // Memoize dialog handlers - MUST be before early return
+  const openAchievementDialog = useCallback((achievement: any) => {
     setSelectedAchievement(achievement);
     setIsDialogOpen(true);
     lenisRef.current?.stop();
-  };
+  }, []);
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     setIsDialogOpen(false);
+    setSelectedAchievement(null);
     lenisRef.current?.start();
-  };
+  }, []);
 
   if (!achievementData) {
     return (
       <div className="text-white h-screen grid place-content-center">
         <motion.div
           className="text-2xl font-semibold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"
-          animate={{
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           Loading...
         </motion.div>
@@ -147,267 +153,370 @@ export default function ScrollingSection(): React.ReactElement {
           }}
         />
 
-        <div className="grid grid-cols-2 relative z-10 max-lg:grid-cols-1 gap-8">
-          <div className="sticky top-0 h-screen flex items-center justify-center my-auto max-lg:h-auto max-lg:relative max-lg:py-16">
-            <motion.h1
-              className="2xl:text-7xl text-5xl px-8 font-semibold text-center tracking-tight leading-[120%]"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-                Life Events
-              </span>
-              <br />
-              <span className="text-gray-300">&</span>
-              <br />
-              <span className="bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 bg-clip-text text-transparent">
-                Volunteering
-              </span>
-            </motion.h1>
+        <div className="sm:grid grid-cols-1 relative z-10 sm:grid-cols-2 gap-8">
+          <div className=" hidden sm:flex sticky top-0 h-screen  items-center justify-center my-auto max-lg:h-auto max-lg:relative max-lg:py-16">
+            <div className="2xl:text-7xl text-5xl px-8 font-semibold text-center tracking-tight leading-[120%]">
+              <SectionTitle title="Life Events & Volunteering" description="" />
+            </div>
+          </div>
+
+          <div className="mb-30 sm:hidden">
+            <SectionTitle title="Life Events & Volunteering" description="" />
           </div>
 
           {/* Combined scrolling sections in left-right grid */}
-          <div className="grid grid-cols-2  px-4 max-md:grid-cols-1">
+          <div className="max-sm:hidden grid sm:grid-cols-2 px-4 ">
             {/* Left column - second half of achievements with offset */}
             <div className="grid gap-6 mt-[26rem] max-lg:mt-[20rem] max-md:mt-0">
-              {achievementData
-                .slice(Math.ceil(achievementData.length / 2))
-                .map((achievement, index) => {
-                  const isEven = index % 2 === 0;
-                  const clipId = `skew-clip-2-${achievement._id}`;
-                  const overlayClipId = `overlay-clip-2-${achievement._id}`;
+              {leftColumnAchievements.map((achievement, index) => {
+                const isEven = index % 2 === 0;
+                const clipId = `skew-clip-2-${achievement._id}`;
+                const overlayClipId = `overlay-clip-2-${achievement._id}`;
+                return (
+                  <motion.figure
+                    key={achievement._id}
+                    className="flex justify-center relative cursor-pointer group"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => openAchievementDialog(achievement)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      delay:
+                        (index + leftColumnAchievements.length) * 0.1,
+                    }}
+                  >
+                    <div className="relative w-80 h-96 max-w-full">
+                      {/* Fixed: Neon glow effect with same clip path */}
+                      <motion.div
+                        className="absolute -inset-2 bg-gradient-to-r from-orange-500/30 via-red-500/30 to-orange-500/30 blur-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        style={{ clipPath: `url(#${clipId})` }}
+                        animate={{
+                          filter: [
+                            "blur(8px) brightness(1)",
+                            "blur(12px) brightness(1.2)",
+                            "blur(8px) brightness(1)",
+                          ],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
 
-                  return (
-                    <motion.figure
-                      key={achievement._id}
-                      className="flex justify-center relative cursor-pointer group"
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => openAchievementDialog(achievement)}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        delay:
-                          (index + Math.ceil(achievementData.length / 2)) * 0.1,
-                      }}
-                    >
-                      <div className="relative w-80 h-96 max-w-full">
-                        {/* Fixed: Neon glow effect with same clip path */}
-                        <motion.div
-                          className="absolute -inset-2 bg-gradient-to-r from-orange-500/30 via-red-500/30 to-orange-500/30 blur-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      {/* Fixed: Enhanced border with same clip path */}
+                      <div
+                        className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 opacity-50 group-hover:opacity-80 transition-opacity duration-300"
+                        style={{ clipPath: `url(#${clipId})` }}
+                      />
+
+                      <svg width="0" height="0" className="absolute">
+                        <defs>
+                          <clipPath id={clipId}>
+                            {isEven ? (
+                              <polygon points="0,0 280,0 320,384 40,384" />
+                            ) : (
+                              <polygon points="40,0 320,0 280,384 0,384" />
+                            )}
+                          </clipPath>
+                        </defs>
+                      </svg>
+
+                      <svg width="0" height="0" className="absolute">
+                        <defs>
+                          <clipPath id={overlayClipId}>
+                            {isEven ? (
+                              <polygon points="0,0 280,0 320,384 40,384" />
+                            ) : (
+                              <polygon points="40,0 320,0 280,384 0,384" />
+                            )}
+                          </clipPath>
+                        </defs>
+                      </svg>
+
+                      <motion.div
+                        className="relative z-10"
+                        whileHover={{
+                          filter: "brightness(1.1) saturate(1.1)",
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <Image
+                          src={
+                            achievement.imgLink?.[0] ||
+                            "https://images.unsplash.com/photo-1718838541476-d04e71caa347?w=500&auto=format&fit=crop"
+                          }
+                          alt={achievement.achievementtitle || ""}
+                          width={320}
+                          height={384}
+                          className="transition-all duration-300 w-full h-full align-bottom object-cover group-hover:brightness-110"
                           style={{ clipPath: `url(#${clipId})` }}
-                          animate={{
-                            filter: [
-                              "blur(8px) brightness(1)",
-                              "blur(12px) brightness(1.2)",
-                              "blur(8px) brightness(1)",
-                            ],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
                         />
+                      </motion.div>
 
-                        {/* Fixed: Enhanced border with same clip path */}
+                      {/* Fixed: Text overlay with proper clipping and skew transform */}
+                      <div
+                        className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+                        style={{ clipPath: `url(#${overlayClipId})` }}
+                      >
                         <div
-                          className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 opacity-50 group-hover:opacity-80 transition-opacity duration-300"
-                          style={{ clipPath: `url(#${clipId})` }}
-                        />
-
-                        <svg width="0" height="0" className="absolute">
-                          <defs>
-                            <clipPath id={clipId}>
-                              {isEven ? (
-                                <polygon points="0,0 280,0 320,384 40,384" />
-                              ) : (
-                                <polygon points="40,0 320,0 280,384 0,384" />
-                              )}
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <svg width="0" height="0" className="absolute">
-                          <defs>
-                            <clipPath id={overlayClipId}>
-                              {isEven ? (
-                                <polygon points="0,0 280,0 320,384 40,384" />
-                              ) : (
-                                <polygon points="40,0 320,0 280,384 0,384" />
-                              )}
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <motion.div
-                          className="relative z-10"
-                          whileHover={{
-                            filter: "brightness(1.1) saturate(1.1)",
-                          }}
-                          transition={{ duration: 0.3 }}
+                          className={`w-full ${
+                            isEven
+                              ? "transform skew-x-12  px-14 py-8"
+                              : "transform -skew-x-12  py-8 px-6"
+                          }`}
                         >
-                          <Image
-                            src={
-                              achievement.imgLink?.[0] ||
-                              "https://images.unsplash.com/photo-1718838541476-d04e71caa347?w=500&auto=format&fit=crop"
-                            }
-                            alt={achievement.achievementtitle || ""}
-                            width={320}
-                            height={384}
-                            className="transition-all duration-300 w-full h-full align-bottom object-cover group-hover:brightness-110"
-                            style={{ clipPath: `url(#${clipId})` }}
-                          />
-                        </motion.div>
-
-                        {/* Fixed: Text overlay with proper clipping and skew transform */}
-                        <div
-                          className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
-                          style={{ clipPath: `url(#${overlayClipId})` }}
-                        >
-                          <div
-                            className={`w-full ${
+                          <h3
+                            className={`text-md font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent leading-tight ${
                               isEven
-                                ? "transform skew-x-12  px-14 py-8"
-                                : "transform -skew-x-12  py-8 px-6"
+                                ? "transform -skew-x-12"
+                                : "transform skew-x-12"
                             }`}
                           >
-                            <h3
-                              className={`text-md font-bold text-white bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent leading-tight ${
-                                isEven
-                                  ? "transform -skew-x-12"
-                                  : "transform skew-x-12"
-                              }`}
-                            >
-                              {achievement.achievementtitle}
-                            </h3>
-                          </div>
+                            {achievement.achievementtitle}
+                          </h3>
                         </div>
                       </div>
-                    </motion.figure>
-                  );
-                })}
+                    </div>
+                  </motion.figure>
+                );
+              })}
             </div>
 
             {/* Right column - first half of achievements */}
             <div className="grid gap-6">
-              {achievementData
-                .slice(0, Math.ceil(achievementData.length / 2))
-                .map((achievement, index) => {
-                  const isEven = index % 2 === 0;
-                  const clipId = `skew-clip-1-${achievement._id}`;
-                  const overlayClipId = `overlay-clip-1-${achievement._id}`;
+              {rightColumnAchievements.map((achievement, index) => {
+                const isEven = index % 2 === 0;
+                const clipId = `skew-clip-1-${achievement._id}`;
+                const overlayClipId = `overlay-clip-1-${achievement._id}`;
+                return (
+                  <motion.figure
+                    key={achievement._id}
+                    className="flex justify-center relative cursor-pointer group"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => openAchievementDialog(achievement)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <div className="relative w-80 h-96 max-w-full">
+                      {/* Fixed: Neon glow effect with same clip path */}
+                      <motion.div
+                        className="absolute -inset-2 bg-gradient-to-r from-orange-500/30 via-red-500/30 to-orange-500/30 blur-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        style={{ clipPath: `url(#${clipId})` }}
+                        animate={{
+                          filter: [
+                            "blur(8px) brightness(1)",
+                            "blur(12px) brightness(1.2)",
+                            "blur(8px) brightness(1)"
+                          ],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
 
-                  return (
-                    <motion.figure
-                      key={achievement._id}
-                      className="flex justify-center relative cursor-pointer group"
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => openAchievementDialog(achievement)}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                    >
-                      <div className="relative w-80 h-96 max-w-full">
-                        {/* Fixed: Neon glow effect with same clip path */}
-                        <motion.div
-                          className="absolute -inset-2 bg-gradient-to-r from-orange-500/30 via-red-500/30 to-orange-500/30 blur-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      {/* Fixed: Enhanced border with same clip path */}
+                      <div
+                        className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 opacity-50 group-hover:opacity-80 transition-opacity duration-300"
+                        style={{ clipPath: `url(#${clipId})` }}
+                      />
+
+                      <svg width="0" height="0" className="absolute">
+                        <defs>
+                          <clipPath id={clipId}>
+                            {isEven ? (
+                              <polygon points="40,0 320,0 280,384 0,384" />
+                            ) : (
+                              <polygon points="0,0 280,0 320,384 40,384" />
+                            )}
+                          </clipPath>
+                        </defs>
+                      </svg>
+
+                      <svg width="0" height="0" className="absolute">
+                        <defs>
+                          <clipPath id={overlayClipId}>
+                            {isEven ? (
+                              <polygon points="40,0 320,0 280,384 0,384" />
+                            ) : (
+                              <polygon points="0,0 280,0 320,384 40,384" />
+                            )}
+                          </clipPath>
+                        </defs>
+                      </svg>
+
+                      <motion.div
+                        className="relative z-10"
+                        whileHover={{
+                          filter: "brightness(1.1) saturate(1.1)",
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <Image
+                          src={
+                            achievement.imgLink?.[0] ||
+                            "https://images.unsplash.com/photo-1718838541476-d04e71caa347?w=500&auto=format&fit=crop"
+                          }
+                          alt={achievement.achievementtitle || ""}
+                          width={320}
+                          height={384}
+                          className="transition-all duration-300 w-full h-full align-bottom object-cover group-hover:brightness-110"
                           style={{ clipPath: `url(#${clipId})` }}
-                          animate={{
-                            filter: [
-                              "blur(8px) brightness(1)",
-                              "blur(12px) brightness(1.2)",
-                              "blur(8px) brightness(1)",
-                            ],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
                         />
+                      </motion.div>
 
-                        {/* Fixed: Enhanced border with same clip path */}
+                      {/* Fixed: Text overlay with proper clipping and skew transform */}
+                      <div
+                        className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+                        style={{ clipPath: `url(#${overlayClipId})` }}
+                      >
                         <div
-                          className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 opacity-50 group-hover:opacity-80 transition-opacity duration-300"
-                          style={{ clipPath: `url(#${clipId})` }}
-                        />
-
-                        <svg width="0" height="0" className="absolute">
-                          <defs>
-                            <clipPath id={clipId}>
-                              {isEven ? (
-                                <polygon points="40,0 320,0 280,384 0,384" />
-                              ) : (
-                                <polygon points="0,0 280,0 320,384 40,384" />
-                              )}
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <svg width="0" height="0" className="absolute">
-                          <defs>
-                            <clipPath id={overlayClipId}>
-                              {isEven ? (
-                                <polygon points="40,0 320,0 280,384 0,384" />
-                              ) : (
-                                <polygon points="0,0 280,0 320,384 40,384" />
-                              )}
-                            </clipPath>
-                          </defs>
-                        </svg>
-
-                        <motion.div
-                          className="relative z-10"
-                          whileHover={{
-                            filter: "brightness(1.1) saturate(1.1)",
-                          }}
-                          transition={{ duration: 0.3 }}
+                          className={` w-full ${
+                            isEven
+                              ? "transform -skew-x-12 py-8 px-6 "
+                              : "transform skew-x-12 px-14 py-8"
+                          }`}
                         >
-                          <Image
-                            src={
-                              achievement.imgLink?.[0] ||
-                              "https://images.unsplash.com/photo-1718838541476-d04e71caa347?w=500&auto=format&fit=crop"
-                            }
-                            alt={achievement.achievementtitle || ""}
-                            width={320}
-                            height={384}
-                            className="transition-all duration-300 w-full h-full align-bottom object-cover group-hover:brightness-110"
-                            style={{ clipPath: `url(#${clipId})` }}
-                          />
-                        </motion.div>
-
-                        {/* Fixed: Text overlay with proper clipping and skew transform */}
-                        <div
-                          className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
-                          style={{ clipPath: `url(#${overlayClipId})` }}
-                        >
-                          <div
-                            className={` w-full ${
+                          <h3
+                            className={`text-md font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent leading-tight ${
                               isEven
-                                ? "transform -skew-x-12 py-8 px-6 "
-                                : "transform skew-x-12 px-14 py-8"
+                                ? "transform skew-x-12"
+                                : "transform -skew-x-12"
                             }`}
                           >
-                            <h3
-                              className={`text-md font-bold text-white bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent leading-tight ${
-                                isEven
-                                  ? "transform skew-x-12"
-                                  : "transform -skew-x-12"
-                              }`}
-                            >
-                              {achievement.achievementtitle}
-                            </h3>
-                          </div>
+                            {achievement.achievementtitle}
+                          </h3>
                         </div>
                       </div>
-                    </motion.figure>
-                  );
-                })}
+                    </div>
+                  </motion.figure>
+                );
+              })}
             </div>
+          </div>
+
+          {/* Achievements Grid */}
+          <div className="sm:hidden grid grid-cols-1 sm:grid-cols-2 gap-6 px-4">
+            {achievementData.map((achievement, index) => {
+              const isEven = index % 2 === 0;
+              const clipId = `skew-clip-${achievement._id}`;
+              const overlayClipId = `overlay-clip-${achievement._id}`;
+
+              return (
+                <motion.figure
+                  key={achievement._id}
+                  className="flex justify-center relative cursor-pointer group"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => openAchievementDialog(achievement)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className="relative w-80 h-96 max-w-full">
+                    {/* Neon glow effect */}
+                    <motion.div
+                      className="absolute -inset-2 bg-gradient-to-r from-orange-500/30 via-red-500/30 to-orange-500/30 blur-lg opacity-0 group-hover:opacity-100 transition-all duration-300"
+                      style={{ clipPath: `url(#${clipId})` }}
+                      animate={{
+                        filter: [
+                          "blur(8px) brightness(1)",
+                          "blur(12px) brightness(1.2)",
+                          "blur(8px) brightness(1)",
+                        ],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+
+                    {/* Border */}
+                    <div
+                      className="absolute -inset-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 opacity-50 group-hover:opacity-80 transition-opacity duration-300"
+                      style={{ clipPath: `url(#${clipId})` }}
+                    />
+
+                    {/* Clipping paths */}
+                    <svg width="0" height="0" className="absolute">
+                      <defs>
+                        <clipPath id={clipId}>
+                          {isEven ? (
+                            <polygon points="0,0 280,0 320,384 40,384" />
+                          ) : (
+                            <polygon points="40,0 320,0 280,384 0,384" />
+                          )}
+                        </clipPath>
+                      </defs>
+                    </svg>
+
+                    <svg width="0" height="0" className="absolute">
+                      <defs>
+                        <clipPath id={overlayClipId}>
+                          {isEven ? (
+                            <polygon points="0,0 280,0 320,384 40,384" />
+                          ) : (
+                            <polygon points="40,0 320,0 280,384 0,384" />
+                          )}
+                        </clipPath>
+                      </defs>
+                    </svg>
+
+                    {/* Image */}
+                    <motion.div
+                      className="relative z-10"
+                      whileHover={{
+                        filter: "brightness(1.1) saturate(1.1)",
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Image
+                        src={
+                          achievement.imgLink?.[0] ||
+                          "https://images.unsplash.com/photo-1718838541476-d04e71caa347?w=500&auto=format&fit=crop"
+                        }
+                        alt={achievement.achievementtitle || ""}
+                        width={320}
+                        height={384}
+                        className="transition-all duration-300 w-full h-full object-cover group-hover:brightness-110"
+                        style={{ clipPath: `url(#${clipId})` }}
+                      />
+                    </motion.div>
+
+                    {/* Overlay text */}
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+                      style={{ clipPath: `url(#${overlayClipId})` }}
+                    >
+                      <div
+                        className={`w-full ${
+                          isEven
+                            ? "transform skew-x-12 px-14 py-8"
+                            : "transform -skew-x-12 py-8 px-6"
+                        }`}
+                      >
+                        <h3
+                          className={`text-md font-bold text-white bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent leading-tight ${
+                            isEven
+                              ? "transform -skew-x-12"
+                              : "transform skew-x-12"
+                          }`}
+                        >
+                          {achievement.achievementtitle}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </motion.figure>
+              );
+            })}
           </div>
         </div>
       </section>

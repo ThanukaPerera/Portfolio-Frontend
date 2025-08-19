@@ -1344,9 +1344,40 @@ export default function Projects({
                 technical expertise, and attention to detail."
               />
             </div>
-            <div className="flex gap-4">
+            <div className="flex sm:flex-row flex-col gap-4">
+              <div className="sm:hidden block mx-auto">
+                {data.map((project, i) => {
+                  const originalIndex = data.findIndex(
+                    (p) => p._id === project._id
+                  );
+                  const targetScale = 1 - (data.length - i) * 0.02;
+                  return (
+                    <Card
+                      key={project._id}
+                      i={originalIndex}
+                      project={project}
+                      url={project.projectImgLink[0]}
+                      src={project.gitHubRepoLink}
+                      title={project.projectTitle}
+                      cardColor={cardColors[originalIndex % cardColors.length]}
+                      borderColor={
+                        borderColors[originalIndex % borderColors.length]
+                      }
+                      description={project.projectDescription}
+                      progress={scrollYProgress}
+                      range={[i * 0.12, 1]}
+                      targetScale={targetScale}
+                      totalCards={rightProjects.length}
+                      columnIndex={i}
+                      onCardClick={openProjectDialog}
+                    />
+                  );
+                })}
+              </div>
+
+
               {/* Left Column */}
-              <div className="flex-1 space-y-3">
+              <div className="sm:flex-1 hidden sm:block space-y-3">
                 {leftProjects.map((project, i) => {
                   const originalIndex = data.findIndex(
                     (p) => p._id === project._id
@@ -1377,7 +1408,7 @@ export default function Projects({
               </div>
 
               {/* Right Column */}
-              <div className="flex-1 space-y-3" style={{ marginTop: "80px" }}>
+              <div className="sm:flex-1 hidden sm:block space-y-3" style={{ marginTop: "80px" }}>
                 {rightProjects.map((project, i) => {
                   const originalIndex = data.findIndex(
                     (p) => p._id === project._id
@@ -1483,14 +1514,14 @@ export const Card: React.FC<CardProps> = ({
         className="relative w-full"
       >
         <motion.div 
-          className="relative backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/[0.05] shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500 cursor-pointer"
+          className="relative backdrop-blur-xl bg-white/[0.02] rounded-xl border border-white/[0.05] shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500 cursor-pointer max-w-xs sm:max-w-full"
           onClick={handleCardClick}
           whileHover={{ y: -4 }}
           whileTap={{ scale: 0.98 }}
         >
           {/* Subtle Card Background */}
           <div
-            className="absolute inset-0 backdrop-blur-2xl rounded-xl"
+            className="absolute inset-0 backdrop-blur-2xl rounded-xl max-w-xs sm:max-w-full"
             style={{
               backgroundColor: cardColor,
             }}
@@ -1498,14 +1529,14 @@ export const Card: React.FC<CardProps> = ({
 
           {/* Border effect */}
           <div
-            className="absolute inset-0 rounded-xl border"
+            className="absolute inset-0 rounded-xl border max-w-xs sm:max-w-full"
             style={{
               borderColor: borderColor,
             }}
           />
 
           {/* Content */}
-          <div className="relative z-10 p-6">
+          <div className="relative z-10 p-6 sm:max-w-lg max-w-full mx-auto">
             {/* Project Image */}
             <div className="relative mb-6">
               <div className="relative h-64 md:h-72 rounded-lg overflow-hidden bg-slate-800/20 backdrop-blur-sm border border-slate-700/20">
