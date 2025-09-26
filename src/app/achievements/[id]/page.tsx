@@ -1,4 +1,4 @@
-import AchievementDetail from '@/component/AchievementDetail';
+import AchievementPageWrapper from '@/component/AchievementPageWrapper';
 
 interface AchievementPageProps {
   params: Promise<{
@@ -8,7 +8,7 @@ interface AchievementPageProps {
 
 export default async function AchievementPage({ params }: AchievementPageProps) {
   const { id } = await params;
-  return <AchievementDetail id={id} />;
+  return <AchievementPageWrapper id={id} />;
 }
 
 export async function generateMetadata({ params }: AchievementPageProps) {

@@ -17,73 +17,21 @@ import {
   ChevronRight,
   Maximize2
 } from 'lucide-react';
-import axios from 'axios';
-
-interface Achievement {
-  _id: string;
-  achievementtitle: string;
-  active: boolean;
-  certification?: string;
-  date?: string;
-  description?: string;
-  imgLink?: string[];
-  updatedAt?: string;
-  organization?: string;
-  location?: string;
-  category?: string;
-  link?: string;
-}
+import { useAchievements, Achievement } from '@/contexts/AchievementContext';
 
 interface AchievementDetailProps {
   id: string;
 }
 
-const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
-
 export default function AchievementDetail({ id }: AchievementDetailProps) {
-  const [achievement, setAchievement] = useState<Achievement | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { achievements } = useAchievements();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageViewMode, setImageViewMode] = useState<'fit' | 'fill'>('fit');
 
-  useEffect(() => {
-    const fetchAchievement = async () => {
-      try {
-        // First try to get all achievements and find the specific one
-        const response = await axios.get(`${API_BASE}/achievements`, {
-          headers: { "Cache-Control": "no-store" },
-        });
-        const achievements = response.data.response;
-        const foundAchievement = achievements.find((achievement: Achievement) => achievement._id === id);
-        
-        if (foundAchievement) {
-          setAchievement(foundAchievement);
-          setLoading(false);
-        } else {
-          // If not found in the list, try the individual endpoint as fallback
-          try {
-            const individualResponse = await axios.get(`${API_BASE}/achievements/${id}`, {
-              headers: { "Cache-Control": "no-store" },
-            });
-            setAchievement(individualResponse.data.response);
-            setLoading(false);
-          } catch {
-            setError('Achievement not found');
-            setLoading(false);
-          }
-        }
-      } catch (err) {
-        console.error('Error fetching achievement:', err);
-        setError('Failed to load achievement');
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchAchievement();
-    }
-  }, [id]);
+  // Find the achievement from the context data
+  const achievement = achievements.find(achievement => achievement._id === id);
+  const loading = false; // No loading since data comes from context
+  const error = !achievement ? 'Achievement not found' : null;
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
@@ -144,7 +92,7 @@ export default function AchievementDetail({ id }: AchievementDetailProps) {
           <h1 className="text-3xl font-bold text-gray-300 mb-4">Achievement Not Found</h1>
           <p className="text-gray-500 text-lg mb-8">{error}</p>
           <Link 
-            href="/" 
+            href="/#scrolling" 
             className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -164,7 +112,7 @@ export default function AchievementDetail({ id }: AchievementDetailProps) {
       <div className="sticky top-0 z-50 bg-black/80 backdrop-blur-lg border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <Link 
-            href="/"
+            href="/#scrolling"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-orange-400 transition-colors group"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />

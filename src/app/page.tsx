@@ -12,6 +12,7 @@ import ContactDisplay from "@/component/Contact";
 import FooterName from "@/component/FooterName";
 import Project2 from "@/component/Project"
 import ProfessionalAchievements from "@/component/ProfessionalAchievements";
+import { AchievementProvider } from "@/contexts/AchievementContext";
 
 
 
@@ -66,17 +67,17 @@ async function getProjects() {
   }
 }
 
-// async function getAchievements() {
-//   try {
-//     const res = await axios.get(`${API_BASE}/achievements`, {
-//       headers: { "Cache-Control": "no-store" },
-//     });
-//     return res.data;
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error("Failed to fetch achievements");
-//   }
-// }
+async function getAchievements() {
+  try {
+    const res = await axios.get(`${API_BASE}/achievements`, {
+      headers: { "Cache-Control": "no-store" },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to fetch achievements");
+  }
+}
 
 async function getContacts() {
   try {
@@ -91,33 +92,35 @@ async function getContacts() {
 }
 
 export default async function Home() {
-  const [introData, aboutData, projectData, contactData] = await Promise.all([
+  const [introData, aboutData, projectData, contactData, achievementData] = await Promise.all([
     getIntros(),
     getAboutMes(),
     getProjects(),
     getContacts(),
+    getAchievements(),
   ]);
 
   return (
-    <div className={`relative min-h-screen w-full ${poppins.className}`}>
-      {/* Unified Background Layer */}
-      <div className="fixed inset-0 -z-10">
-        {/* Main gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-          {/* Grid pattern overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
-          {/* Color gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-orange-950/20 to-transparent" />
+    <AchievementProvider achievements={achievementData.response}>
+      <div className={`relative min-h-screen w-full ${poppins.className}`}>
+        {/* Unified Background Layer */}
+        <div className="fixed inset-0 -z-10">
+          {/* Main gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+            {/* Grid pattern overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
+            {/* Color gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-orange-950/20 to-transparent" />
+          </div>
+
+          {/* Global floating elements */}
+         <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-orange-500/15 to-orange-700/15 rounded-full blur-2xl animate-float-slow" />
+          <div className="absolute top-1/3 right-20 w-40 h-40 bg-gradient-to-br from-gray-500/10 to-orange-500/10 rounded-full blur-3xl animate-float-medium" />
+          <div className="absolute bottom-1/3 left-20 w-36 h-36 bg-gradient-to-br from-orange-500/12 to-gray-500/12 rounded-full blur-2xl animate-float-fast" />
+          <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-br from-orange-500/15 to-orange-300/15 rounded-full blur-xl animate-float-slow" />
         </div>
 
-        {/* Global floating elements */}
-       <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-orange-500/15 to-orange-700/15 rounded-full blur-2xl animate-float-slow" />
-        <div className="absolute top-1/3 right-20 w-40 h-40 bg-gradient-to-br from-gray-500/10 to-orange-500/10 rounded-full blur-3xl animate-float-medium" />
-        <div className="absolute bottom-1/3 left-20 w-36 h-36 bg-gradient-to-br from-orange-500/12 to-gray-500/12 rounded-full blur-2xl animate-float-fast" />
-        <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-br from-orange-500/15 to-orange-300/15 rounded-full blur-xl animate-float-slow" />
-      </div>
-
-      <TimelineNav />
+        <TimelineNav />
       {/* Content sections - now with transparent/minimal backgrounds */}
       <div className="w-full bg-transparent relative z-20 flex flex-col items-center justify-center">
         {/* <Intro data={introData.response[0]} />
@@ -147,8 +150,7 @@ export default async function Home() {
         </section>
         
         <section id="scrolling" className="w-full">
-          
-          <ProfessionalAchievements />  
+          <ProfessionalAchievements data={achievementData.response} />  
         </section>
         
         <section id="contact" className="w-full">
@@ -160,7 +162,8 @@ export default async function Home() {
           <Footer data={introData.response[0]} />
         </section>
 
+        </div>
       </div>
-    </div>
+    </AchievementProvider>
   );
 }

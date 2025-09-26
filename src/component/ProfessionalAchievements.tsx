@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, Award, ExternalLink, Tag } from 'lucide-react';
-import axios from 'axios';
 import SectionTitle from './SectionTitle';
 
 interface Achievement {
@@ -23,35 +21,17 @@ interface Achievement {
   link?: string;
 }
 
-const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+interface ProfessionalAchievementsProps {
+  data: Achievement[];
+}
 
-export default function ProfessionalAchievements() {
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchAchievements = async () => {
-      try {
-        const response = await axios.get(`${API_BASE}/achievements`, {
-          headers: { "Cache-Control": "no-store" },
-        });
-        const activeAchievements = response.data.response
-          .filter((achievement: Achievement) => achievement.active)
-          .sort((a: Achievement, b: Achievement) => 
-            new Date(b.date || '').getTime() - new Date(a.date || '').getTime()
-          );
-        setAchievements(activeAchievements);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching achievements:', err);
-        setError('Failed to load achievements');
-        setLoading(false);
-      }
-    };
-
-    fetchAchievements();
-  }, []);
+export default function ProfessionalAchievements({ data }: ProfessionalAchievementsProps) {
+  // Process the data directly from props - no need for API calls
+  const achievements = data
+    .filter((achievement: Achievement) => achievement.active)
+    .sort((a: Achievement, b: Achievement) => 
+      new Date(b.date || '').getTime() - new Date(a.date || '').getTime()
+    );
 
   const getCategoryColor = (category?: string) => {
     const colors: { [key: string]: string } = {
@@ -78,37 +58,7 @@ export default function ProfessionalAchievements() {
     return patterns[index % patterns.length];
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <motion.div
-          className="flex flex-col items-center gap-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="w-16 h-16 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin"></div>
-          <p className="text-gray-400 text-lg">Loading achievements...</p>
-        </motion.div>
-      </div>
-    );
-  }
 
-  if (error) {
-    return (
-      <div className="min-h-screen  flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-400 text-lg mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen text-white">
