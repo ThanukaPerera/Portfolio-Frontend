@@ -59,10 +59,8 @@ export default function Projects({ data }: ProjectProps) {
   return (
     <div className="flex flex-col gap-3 mx-auto items-center min-h-screen max-w-7xl py-12 px-4 ">
       <div className="text-center mb-8">
-        <SectionTitle title="Featured Projects" />
-        <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-          Explore my carefully crafted projects that showcase creativity, technical expertise, and attention to detail.
-        </p>
+        <SectionTitle title="Featured Projects" description='Explore my carefully crafted projects that showcase creativity, technical expertise, and attention to detail.'/>
+        
       </div>
 
       <div className="w-full max-w-6xl mx-auto relative">
@@ -157,7 +155,7 @@ export default function Projects({ data }: ProjectProps) {
                       <div className="relative z-10 p-6 flex flex-col h-full">
                         {/* Project Image */}
                         <div className="relative mb-6">
-                          <div className="relative h-48 rounded-lg overflow-hidden bg-black/30 backdrop-blur-sm border border-orange-500/20">
+                          <div className="relative h-72 rounded-lg overflow-hidden bg-black/30 backdrop-blur-sm border border-orange-500/20">
                             <motion.div
                               className="relative w-full h-full"
                               whileHover={{ scale: 1.05 }}

@@ -12,6 +12,8 @@ import { Poppins } from "next/font/google";
 import ContactDisplay from "@/component/Contact";
 import FooterName from "@/component/FooterName";
 import Project2 from "@/component/Project"
+import ProfessionalAchievements from "@/component/ProfessionalAchievements";
+
 
 
 const poppins = Poppins({
@@ -146,7 +148,8 @@ export default async function Home() {
         </section>
         
         <section id="scrolling" className="w-full">
-          <ScrollingSection />
+          
+          <ProfessionalAchievements />  
         </section>
         
         <section id="contact" className="w-full">
