@@ -11,6 +11,7 @@ import TimelineNav from "@/component/TimelineNav";
 import { Poppins } from "next/font/google";
 import ContactDisplay from "@/component/Contact";
 import FooterName from "@/component/FooterName";
+import Project2 from "@/component/Project"
 
 
 const poppins = Poppins({
@@ -140,7 +141,8 @@ export default async function Home() {
         </section>
         
         <section id="projects" className="w-full">
-          <Projects data={projectData.response} />
+          {/* <Projects data={projectData.response} /> */}
+          <Project2 data={projectData.response} />
         </section>
         
         <section id="scrolling" className="w-full">
