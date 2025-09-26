@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { 
   ArrowLeft, 
   Calendar, 
@@ -47,7 +46,6 @@ export default function AchievementDetail({ id }: AchievementDetailProps) {
   const [error, setError] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageViewMode, setImageViewMode] = useState<'fit' | 'fill'>('fit');
-  const router = useRouter();
 
   useEffect(() => {
     const fetchAchievement = async () => {
@@ -70,7 +68,7 @@ export default function AchievementDetail({ id }: AchievementDetailProps) {
             });
             setAchievement(individualResponse.data.response);
             setLoading(false);
-          } catch (individualErr) {
+          } catch {
             setError('Achievement not found');
             setLoading(false);
           }

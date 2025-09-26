@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Award, ExternalLink, MapPin, Building2, Tag, Clock, Section } from 'lucide-react';
+import { Calendar, Award, ExternalLink, Tag } from 'lucide-react';
 import axios from 'axios';
 import SectionTitle from './SectionTitle';
 
@@ -52,15 +52,6 @@ export default function ProfessionalAchievements() {
 
     fetchAchievements();
   }, []);
-
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
 
   const getCategoryColor = (category?: string) => {
     const colors: { [key: string]: string } = {

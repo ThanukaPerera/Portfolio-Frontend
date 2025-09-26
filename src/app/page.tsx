@@ -6,7 +6,6 @@ import Skills from "@/component/Skills";
 // import Projects from "@/component/uiLayout/Projects";
 import axios from "axios";
 import Footer from "@/component/uiLayout/Footer";
-import ScrollingSection from "@/component/uiLayout/ScrollingSection";
 import TimelineNav from "@/component/TimelineNav";
 import { Poppins } from "next/font/google";
 import ContactDisplay from "@/component/Contact";
@@ -108,7 +107,7 @@ export default async function Home() {
           {/* Grid pattern overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
           {/* Color gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-orange-950/20 via-gray-900/15 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-orange-950/20 to-transparent" />
         </div>
 
         {/* Global floating elements */}

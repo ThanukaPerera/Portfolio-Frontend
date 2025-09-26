@@ -1,19 +1,20 @@
 import AchievementDetail from '@/component/AchievementDetail';
 
 interface AchievementPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function AchievementPage({ params }: AchievementPageProps) {
-  return <AchievementDetail id={params.id} />;
+export default async function AchievementPage({ params }: AchievementPageProps) {
+  const { id } = await params;
+  return <AchievementDetail id={id} />;
 }
 
 export async function generateMetadata({ params }: AchievementPageProps) {
-  // You could fetch the achievement data here to generate dynamic metadata
+  const { id } = await params;
   return {
-    title: `Achievement Details | Portfolio`,
+    title: `Achievement ${id} | Portfolio`,
     description: 'Detailed view of professional achievement with images, description, and relevant information.',
   };
 }
