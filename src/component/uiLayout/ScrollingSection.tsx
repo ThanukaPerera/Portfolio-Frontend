@@ -465,7 +465,6 @@ const AchievementDialog: React.FC<AchievementDialogProps> = ({ achievement, isOp
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface Achievement {
   _id: string;
   achievementtitle: string;

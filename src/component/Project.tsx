@@ -5,7 +5,7 @@ import SectionTitle from "./SectionTitle";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -121,12 +121,10 @@ export default function Projects({ data }: ProjectProps) {
         >
           {data.map((project, index) => {
             const colors = generateCardColors();
-            const container = useRef(null);
             
             return (
               <SwiperSlide key={project._id}>
                 <div
-                  ref={container}
                   className="sticky top-4 mb-6"
                   style={{
                     height: "auto",
