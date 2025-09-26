@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import { 
-  ArrowLeft, 
   Calendar, 
   Award, 
   ExternalLink, 
@@ -91,13 +90,7 @@ export default function AchievementDetail({ id }: AchievementDetailProps) {
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-300 mb-4">Achievement Not Found</h1>
           <p className="text-gray-500 text-lg mb-8">{error}</p>
-          <Link 
-            href="/#scrolling" 
-            className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Achievements
-          </Link>
+          
         </div>
       </div>
     );
@@ -108,20 +101,9 @@ export default function AchievementDetail({ id }: AchievementDetailProps) {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header with Back Button */}
-      <div className="sticky top-0 z-50 bg-black/80 backdrop-blur-lg border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <Link 
-            href="/#scrolling"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-orange-400 transition-colors group"
-          >
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Achievements</span>
-          </Link>
-        </div>
-      </div>
+      
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Image Gallery Section */}
           <div className="lg:col-span-8">

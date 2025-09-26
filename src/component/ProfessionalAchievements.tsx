@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Award, ExternalLink, Tag } from 'lucide-react';
+import { Calendar, Award,  Tag } from 'lucide-react';
 import SectionTitle from './SectionTitle';
 
 interface Achievement {
@@ -45,8 +45,8 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
   };
 
   // Fixed uniform card size - much smaller
-  const CARD_HEIGHT = 'h-64'; // Fixed height for all cards
-  const IMAGE_HEIGHT = 'h-32'; // Fixed image height for all cards
+  // const CARD_HEIGHT = 'h-64'; // Fixed height for all cards
+  const IMAGE_HEIGHT = 'h-96'; // Fixed image height for all cards
 
   const getGradientPattern = (index: number) => {
     const patterns = [
@@ -115,7 +115,7 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
           </motion.div>
         ) : (
           <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-8 lg:gap-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -150,11 +150,11 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
                 className="group"
               >
                 <Link href={`/achievements/${achievement._id}`}>
-                  <div className={`achievement-card relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl overflow-hidden hover:border-orange-500/30 smooth-transition professional-shadow hover:shadow-2xl hover:shadow-orange-500/10 ${CARD_HEIGHT} w-full flex flex-col`}>
+                  <div className={`achievement-card relative  backdrop-blur-sm border  rounded-2xl bg-black/60   border-orange-500/50  shadow-lg overflow-hidden hover:border-orange-500/30 smooth-transition professional-shadow hover:shadow-2xl hover:shadow-orange-500/10 h-full w-full flex flex-col`}>
                     {/* Background Pattern */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${getGradientPattern(index)} opacity-20 pointer-events-none`} />
                     {/* Image Section */}
-                    <div className={`relative ${IMAGE_HEIGHT} overflow-hidden flex-shrink-0`}>
+                    <div className={`relative ${IMAGE_HEIGHT} w-xs mx-auto overflow-hidden flex-shrink-0`}>
                       {achievement.imgLink && achievement.imgLink.length > 0 ? (
                         <Image
                           src={achievement.imgLink[0]}
@@ -194,35 +194,27 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
                     </div>
 
                     {/* Content Section */}
-                    <div className="p-3 flex-1 flex flex-col">
-                      <div className="flex-1">
-                        <h3 className="text-sm font-bold mb-2 line-clamp-2 group-hover:text-orange-400 smooth-transition">
+                    <div className="p-4 flex-1 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <h3 className="text-sm font-semibold text-white leading-tight line-clamp-2 group-hover:text-orange-400 transition-colors duration-300 tracking-wide">
                           {achievement.achievementtitle}
                         </h3>
                         
-                        {achievement.description && (
-                          <p className="text-gray-400 text-xs leading-relaxed line-clamp-2 mb-2">
-                            {achievement.description}
-                          </p>
+                        {/* Professional divider */}
+                        <div className="w-8 h-0.5 bg-gradient-to-r from-orange-500/40 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        {/* Achievement type indicator */}
+                        {achievement.certification && (
+                          <div className="flex items-center gap-1.5 mt-2">
+                            <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                            <span className="text-xs text-blue-400 font-medium uppercase tracking-wider">
+                              Certified
+                            </span>
+                          </div>
                         )}
-
-                        {/* Meta Information - Minimal for small cards */}
-                        <div className="space-y-1 mb-2">
-                          {achievement.certification && (
-                            <div className="flex items-center justify-center">
-                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full text-xs font-medium">
-                                <Award className="w-2 h-2" />
-                                Certified
-                              </span>
-                            </div>
-                          )}
-                        </div>
                       </div>
-
-                      {/* Action Button */}
-                      <div className="flex items-center justify-center mt-auto pt-1">
-                        <ExternalLink className="w-3 h-3 text-gray-600 group-hover:text-orange-400 smooth-transition" />
-                      </div>
+                      
+                     
                     </div>
 
                     {/* Hover Border Effect */}
