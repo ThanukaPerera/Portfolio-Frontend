@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ import {
   ChevronRight,
   Maximize2
 } from 'lucide-react';
-import { useAchievements, Achievement } from '@/contexts/AchievementContext';
+import { useAchievements} from '@/contexts/AchievementContext';
 
 interface AchievementDetailProps {
   id: string;

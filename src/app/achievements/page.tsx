@@ -1,7 +1,7 @@
-import ProfessionalAchievements from '@/component/ProfessionalAchievements';
+import AchievementsPageWrapper from '@/component/AchievementsPageWrapper';
 
 export default function AchievementsPage() {
-  return <ProfessionalAchievements />;
+  return <AchievementsPageWrapper />;
 }
 
 export const metadata = {
