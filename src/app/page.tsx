@@ -4,7 +4,7 @@ import AboutMe from "@/component/AboutMe";
 import Intro from "@/component/Intro";
 import Skills from "@/component/Skills";
 // import Projects from "@/component/uiLayout/Projects";
-import axios from "axios";
+
 import Footer from "@/component/uiLayout/Footer";
 import TimelineNav from "@/component/TimelineNav";
 import { Poppins } from "next/font/google";
