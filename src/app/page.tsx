@@ -31,66 +31,97 @@ const poppins = Poppins({
 const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 console.log(API_BASE);
 
+// async function getIntros() {
+//   try {
+//     const res = await axios.get(`${API_BASE}/intros`, {
+//       headers: { "Cache-Control": "no-store" },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Failed to fetch intros");
+//   }
+// }
+
+// async function getAboutMes() {
+//   try {
+//     const res = await axios.get(`${API_BASE}/aboutMes`, {
+//       headers: { "Cache-Control": "no-store" },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Failed to fetch aboutMes");
+//   }
+// }
+
+// async function getProjects() {
+//   try {
+//     const res = await axios.get(`${API_BASE}/projects`, {
+//       headers: { "Cache-Control": "no-store" },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Failed to fetch projects");
+//   }
+// }
+
+// async function getAchievements() {
+//   try {
+//     const res = await axios.get(`${API_BASE}/achievements`, {
+//       headers: { "Cache-Control": "no-store" },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Failed to fetch achievements");
+//   }
+// }
+
+// async function getContacts() {
+//   try {
+//     const res = await axios.get(`${API_BASE}/contacts`, {
+//       headers: { "Cache-Control": "no-store" },
+//     });
+//     return res.data;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error("Failed to fetch contacts");
+//   }
+// }
+
+
+
 async function getIntros() {
-  try {
-    const res = await axios.get(`${API_BASE}/intros`, {
-      headers: { "Cache-Control": "no-store" },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch intros");
-  }
+  const res = await fetch(`${API_BASE}/intros`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch intros");
+  return res.json();
 }
 
 async function getAboutMes() {
-  try {
-    const res = await axios.get(`${API_BASE}/aboutMes`, {
-      headers: { "Cache-Control": "no-store" },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch aboutMes");
-  }
+  const res = await fetch(`${API_BASE}/aboutMes`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch aboutMes");
+  return res.json();
 }
 
 async function getProjects() {
-  try {
-    const res = await axios.get(`${API_BASE}/projects`, {
-      headers: { "Cache-Control": "no-store" },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch projects");
-  }
+  const res = await fetch(`${API_BASE}/projects`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch projects");
+  return res.json();
 }
 
 async function getAchievements() {
-  try {
-    const res = await axios.get(`${API_BASE}/achievements`, {
-      headers: { "Cache-Control": "no-store" },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch achievements");
-  }
+  const res = await fetch(`${API_BASE}/achievements`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch achievements");
+  return res.json();
 }
 
 async function getContacts() {
-  try {
-    const res = await axios.get(`${API_BASE}/contacts`, {
-      headers: { "Cache-Control": "no-store" },
-    });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch contacts");
-  }
+  const res = await fetch(`${API_BASE}/contacts`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch contacts");
+  return res.json();
 }
-
 export default async function Home() {
   const [introData, aboutData, projectData, contactData, achievementData] = await Promise.all([
     getIntros(),
