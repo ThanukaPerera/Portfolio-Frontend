@@ -92,16 +92,24 @@ export default function ProjectsAdmin() {
 
     const handleFormSubmit = async (projectData: Partial<Project>) => {
         setProcessing(true);
-        console.log(projectData)
         try {
-            // Clean up the data before submission
+            // Clean up the data before submission - remove MongoDB fields and filter empty values
             const cleanedData = {
-                ...projectData,
-                projectImgLink: projectData.projectImgLink?.filter(link => link.trim() !== ''),
-                projectVideoLink: projectData.projectVideoLink?.filter(link => link.trim() !== ''),
-                gitHubRepoLink: projectData.gitHubRepoLink?.filter(link => link.trim() !== '') || []
+                projectTitle: projectData.projectTitle,
+                projectDescription: projectData.projectDescription,
+                myContribution: projectData.myContribution || '',
+                technologiesUsed: projectData.technologiesUsed || [],
+                projectImgLink: projectData.projectImgLink?.filter(link => link.trim() !== '') || [],
+                // Handle both camelCase and lowercase variants for backward compatibility
+                projectVideoLink: projectData.projectVideoLink || {},
+                gitHubRepoLink: projectData.gitHubRepoLink || {},
+                otherLink: projectData.otherLink || {},
+                type: projectData.type,
+                status: projectData.status,
+                startDate: projectData.startDate,
+                endDate: projectData.endDate,
+                active: projectData.active ?? true
             };
-            console.log(cleanedData)
 
             if (isEditing && selectedProject) {
                 await axios.put(`${API_BASE}/project/${selectedProject._id}`, cleanedData);
@@ -160,11 +168,52 @@ export default function ProjectsAdmin() {
                         </CardHeader>
 
                         <CardContent className="space-y-4">
+                            {/* Project Metadata */}
+                            <div className="flex justify-between items-start">
+                                <div className="space-y-1">
+                                    <p className="text-sm font-medium text-muted-foreground">Type: {project.type}</p>
+                                    <p className="text-sm font-medium text-muted-foreground">Status: 
+                                        <span className={`ml-1 ${
+                                            project.status === 'Completed' ? 'text-green-600' :
+                                            project.status === 'In Progress' ? 'text-yellow-600' : 'text-red-600'
+                                        }`}>
+                                            {project.status}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
                             <div className="space-y-2">
                                 <p className="text-sm font-medium">Description</p>
                                 <p className="text-sm text-muted-foreground">{project.projectDescription}</p>
                             </div>
 
+                            {/* Technologies Used */}
+                            {project.technologiesUsed && project.technologiesUsed.length > 0 && (
+                                <div className="space-y-2">
+                                    <p className="text-sm font-medium">Technologies</p>
+                                    <div className="flex flex-wrap gap-1">
+                                        {project.technologiesUsed.map((tech, index) => (
+                                            <span
+                                                key={index}
+                                                className="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* My Contribution */}
+                            {project.myContribution && (
+                                <div className="space-y-2">
+                                    <p className="text-sm font-medium">My Contribution</p>
+                                    <p className="text-sm text-muted-foreground">{project.myContribution}</p>
+                                </div>
+                            )}
+
+                            {/* Images */}
                             {project.projectImgLink.length > 0 && (
                                 <div className="space-y-2">
                                     <p className="text-sm font-medium">Images</p>
@@ -192,18 +241,57 @@ export default function ProjectsAdmin() {
                                 </div>
                             )}
 
-                            {project.gitHubRepoLink && project.gitHubRepoLink.length > 0 && (
+                            {/* Video Links */}
+                            {project.projectVideoLink && Object.keys(project.projectVideoLink).length > 0 && (
                                 <div className="space-y-2">
-                                    <p className="text-sm font-medium">GitHub Repository</p>
-                                    {project.gitHubRepoLink.map((link, index) => (
-                                        isValidUrl(link) && (
+                                    <p className="text-sm font-medium">Video Links</p>
+                                    {Object.entries(project.projectVideoLink).map(([name, url]) => (
+                                        isValidUrl(url) && (
                                             <Link
-                                                key={index}
-                                                href={link}
+                                                key={name}
+                                                href={url}
                                                 target="_blank"
                                                 className="text-sm text-primary hover:underline block"
                                             >
-                                                GitHub Repository {index + 1}
+                                                📹 {name}
+                                            </Link>
+                                        )
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* GitHub Links */}
+                            {project.gitHubRepoLink && Object.keys(project.gitHubRepoLink).length > 0 && (
+                                <div className="space-y-2">
+                                    <p className="text-sm font-medium">GitHub Repositories</p>
+                                    {Object.entries(project.gitHubRepoLink).map(([name, url]) => (
+                                        isValidUrl(url) && (
+                                            <Link
+                                                key={name}
+                                                href={url}
+                                                target="_blank"
+                                                className="text-sm text-primary hover:underline block"
+                                            >
+                                                🐙 {name}
+                                            </Link>
+                                        )
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Other Links */}
+                            {project.otherLink && Object.keys(project.otherLink).length > 0 && (
+                                <div className="space-y-2">
+                                    <p className="text-sm font-medium">Other Links</p>
+                                    {Object.entries(project.otherLink).map(([name, url]) => (
+                                        isValidUrl(url) && (
+                                            <Link
+                                                key={name}
+                                                href={url}
+                                                target="_blank"
+                                                className="text-sm text-primary hover:underline block"
+                                            >
+                                                🔗 {name}
                                             </Link>
                                         )
                                     ))}
@@ -259,7 +347,6 @@ export default function ProjectsAdmin() {
                     {isEditing ? 'Edit Project' : 'Create New Project'}
                 </h2>
                 <ProjectForm
-                    // @ts-expect-error - Type mismatch between Project types
                     initialData={selectedProject}
                     onSubmit={handleFormSubmit}
                     onCancel={() => setShowModal(false)}

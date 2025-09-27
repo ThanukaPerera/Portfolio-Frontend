@@ -1,24 +1,45 @@
-'use client';
-import React, { useRef } from 'react';
-import Image from 'next/image';
+"use client";
+import React, { useRef } from "react";
+import Image from "next/image";
 import SectionTitle from "./SectionTitle";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
-import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import { motion } from "framer-motion";
+import {
+  User,
+  Users,
+  Home,
+  Globe,
+  GraduationCap,
+  FileText,
+} from "lucide-react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 interface Project {
   _id: string;
   projectTitle: string;
   projectDescription: string;
+  myContribution?: string;
+  technologiesUsed: string[];
   projectImgLink: string[];
-  projectvideoLink: string[];
-  gitHubRepoLink: string;
+  projectVideoLink?: { [key: string]: string };
+  gitHubRepoLink?: { [key: string]: string };
+  otherLink?: { [key: string]: string };
+  type:
+    | "Individual"
+    | "Team"
+    | "Client"
+    | "Open Source"
+    | "Academic"
+    | "Other";
+  status: "Completed" | "In Progress" | "On Hold";
+  startDate?: string;
+  endDate?: string;
   active?: boolean;
 }
 
@@ -27,7 +48,7 @@ interface ProjectProps {
 }
 
 const isValidUrl = (url: string) => {
-  if (!url || typeof url !== "string") return false; 
+  if (!url || typeof url !== "string") return false;
   try {
     new URL(url);
     return true;
@@ -50,8 +71,55 @@ export default function Projects({ data }: ProjectProps) {
   const swiperRef = useRef<SwiperType | null>(null);
 
   const handleCardClick = (project: Project) => {
-    if (project.gitHubRepoLink && isValidUrl(project.gitHubRepoLink)) {
-      window.open(project.gitHubRepoLink, '_blank', 'noopener,noreferrer');
+    // Navigate to project detail page
+    window.location.href = `/projects/${project._id}`;
+  };
+
+  // const getYouTubeEmbedUrl = (url: string) => {
+  //   const videoId = url.match(
+  //     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/
+  //   );
+  //   return videoId ? `https://www.youtube.com/embed/${videoId[1]}` : null;
+  // };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Completed":
+        return "text-emerald-400";
+      case "In Progress":
+        return "text-orange-400";
+      case "On Hold":
+        return "text-red-400";
+      default:
+        return "text-gray-400";
+    }
+  };
+
+  // const getTypeIcon = (type: string) => {
+  //   switch (type) {
+  //     case 'Individual': return '👤';
+  //     case 'Group': return '👥';
+  //     case 'Client': return '🏢';
+  //     case 'Open Source': return '🌐';
+  //     case 'Academic': return '🎓';
+  //     default: return '📋';
+  //   }
+  // };
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case "Individual":
+        return <User className="w-5 h-5 text-orange-500" />;
+      case "Group":
+        return <Users className="w-5 h-5 text-orange-500" />;
+      case "Client":
+        return <Home className="w-5 h-5 text-orange-500" />;
+      case "Open Source":
+        return <Globe className="w-5 h-5 text-orange-500" />;
+      case "Academic":
+        return <GraduationCap className="w-5 h-5 text-orange-500" />;
+      default:
+        return <FileText className="w-5 h-5 text-orange-500" />;
     }
   };
 
@@ -60,33 +128,59 @@ export default function Projects({ data }: ProjectProps) {
   return (
     <div className="flex flex-col gap-3 mx-auto items-center min-h-screen max-w-7xl py-12 px-4 ">
       <div className="text-center mb-8">
-        <SectionTitle title="Featured Projects" description='Explore my carefully crafted projects that showcase creativity, technical expertise, and attention to detail.'/>
-        
+        <SectionTitle
+          title="Featured Projects"
+          description="Explore my carefully crafted projects that showcase creativity, technical expertise, and attention to detail."
+        />
       </div>
 
       <div className="w-full max-w-6xl mx-auto relative">
         {/* Custom Navigation Buttons */}
         <motion.button
           onClick={() => swiperRef.current?.slidePrev()}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/60 backdrop-blur-sm border border-orange-500/50 rounded-full shadow-lg flex items-center justify-center hover:bg-orange-500/20 transition-all duration-200 text-white"
+          className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/60 backdrop-blur-sm border border-orange-500/50 rounded-full shadow-lg flex items-center justify-center hover:bg-orange-500/20 transition-all duration-200 text-white"
           aria-label="Previous slide"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </motion.button>
 
         <motion.button
           onClick={() => swiperRef.current?.slideNext()}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/60 backdrop-blur-sm border border-orange-500/50 rounded-full shadow-lg flex items-center justify-center hover:bg-orange-500/20 transition-all duration-200 text-white"
+          className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-black/60 backdrop-blur-sm border border-orange-500/50 rounded-full shadow-lg flex items-center justify-center hover:bg-orange-500/20 transition-all duration-200 text-white"
           aria-label="Next slide"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 18L15 12L9 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </motion.button>
 
@@ -99,8 +193,10 @@ export default function Projects({ data }: ProjectProps) {
           slidesPerView={1}
           pagination={{
             clickable: true,
-            bulletClass: 'swiper-pagination-bullet !w-3 !h-3 !bg-gray-500 !opacity-50',
-            bulletActiveClass: 'swiper-pagination-bullet-active !bg-orange-500 !opacity-100',
+            bulletClass:
+              "swiper-pagination-bullet !w-3 !h-3 !bg-gray-500 !opacity-50",
+            bulletActiveClass:
+              "swiper-pagination-bullet-active !bg-orange-500 !opacity-100",
           }}
           autoplay={{
             delay: 5000,
@@ -120,24 +216,18 @@ export default function Projects({ data }: ProjectProps) {
         >
           {data.map((project, index) => {
             const colors = generateCardColors();
-            
+
             return (
               <SwiperSlide key={project._id}>
-                <div
-                  className="sticky top-4 mb-6"
-                  style={{
-                    height: "auto",
-                  }}
-                >
+                <div className="h-full">
                   <motion.div
-                    className="relative w-full"
+                    className="relative w-full h-full"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <motion.div 
-                      className="relative backdrop-blur-xl rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500 cursor-pointer h-[600px] flex flex-col"
-                      onClick={() => handleCardClick(project)}
+                    <motion.div
+                      className="relative backdrop-blur-xl rounded-xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500 h-[500px] flex flex-col"
                       whileTap={{ scale: 0.98 }}
                       style={{
                         backgroundColor: "rgba(20, 16, 14, 0.95)", // Very dark orange/brown near black
@@ -153,10 +243,10 @@ export default function Projects({ data }: ProjectProps) {
                       />
 
                       {/* Content */}
-                      <div className="relative z-10 p-6 flex flex-col h-full">
+                      <div className="relative z-10 p-6 flex flex-col h-full ">
                         {/* Project Image */}
-                        <div className="relative mb-6">
-                          <div className="relative h-72 rounded-lg overflow-hidden bg-black/30 backdrop-blur-sm border border-orange-500/20">
+                        <div className="relative mb-4 flex-shrink-0">
+                          <div className="relative h-48 rounded-lg overflow-hidden bg-black/30 backdrop-blur-sm border border-orange-500/20">
                             <motion.div
                               className="relative w-full h-full"
                               whileHover={{ scale: 1.05 }}
@@ -172,15 +262,24 @@ export default function Projects({ data }: ProjectProps) {
                                 />
                               ) : (
                                 <div className="w-full h-full bg-gray-800/50 flex items-center justify-center">
-                                  <span className="text-gray-400 text-sm">No image</span>
+                                  <span className="text-gray-400 text-sm">
+                                    No image
+                                  </span>
                                 </div>
                               )}
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
-                            
+
                             {/* Click indicator */}
                             <div className="absolute top-4 right-4 bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              >
                                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                                 <polyline points="15,3 21,3 21,9" />
                                 <line x1="10" y1="14" x2="21" y2="3" />
@@ -190,8 +289,8 @@ export default function Projects({ data }: ProjectProps) {
                         </div>
 
                         {/* Project Info */}
-                        <div className="flex flex-col flex-1 space-y-4">
-                          {/* Project Number and Category */}
+                        <div className="flex flex-col flex-1 space-y-3 min-h-0">
+                          {/* Project Header with Type, Status, and Number */}
                           <div className="flex items-center justify-between">
                             <div className="inline-flex items-center gap-2">
                               <span
@@ -206,23 +305,58 @@ export default function Projects({ data }: ProjectProps) {
                                 Project
                               </span>
                             </div>
-                            
+                            <div className="flex items-center gap-2">
+                              {/* <span className="text-lg">{getTypeIcon(project.type)}</span> */}
+                              {getTypeIcon(project.type)}
+                              <span
+                                className={`text-xs font-semibold ${getStatusColor(
+                                  project.status
+                                )}`}
+                              >
+                                {project.status}
+                              </span>
+                              
+                            </div>
                           </div>
 
-                          {/* Title */}
-                          <h3 className="text-xl font-bold text-white leading-tight group-hover:text-gray-100 transition-colors duration-300">
-                            {project.projectTitle}
-                          </h3>
-
-                          {/* Description */}
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-300 leading-relaxed line-clamp-4">
-                              {project.projectDescription}
+                          {/* Title and Type */}
+                          <div>
+                            <h3 className="text-xl font-bold text-white leading-tight group-hover:text-gray-100 transition-colors duration-300">
+                              {project.projectTitle}
+                            </h3>
+                            <p className="text-sm text-orange-400 mt-1">
+                              {project.type} Project
                             </p>
                           </div>
 
-                          {/* CTA */}
-                          <div className="pt-2 mt-auto">
+                          {/* Technologies Used */}
+                          {project.technologiesUsed &&
+                            project.technologiesUsed.length > 0 && (
+                              <div className="flex flex-wrap gap-1">
+                                {project.technologiesUsed
+                                  .slice(0, 6)
+                                  .map((tech, techIndex) => (
+                                    <span
+                                      key={techIndex}
+                                      className="px-2 py-1 text-xs bg-orange-500/20 text-orange-300 rounded-md border border-orange-500/30"
+                                    >
+                                      {tech}
+                                    </span>
+                                  ))}
+                                {project.technologiesUsed.length > 6 && (
+                                  <span className="px-2 py-1 text-xs bg-gray-500/20 text-gray-400 rounded-md">
+                                    +{project.technologiesUsed.length - 6} more
+                                  </span>
+                                )}
+                              </div>
+                            )}
+
+
+
+                          {/* Action Links */}
+                          <div className="pt-4 space-y-2 flex-shrink-0 mt-auto">
+                            
+                            {/* Main CTA */}
                             <motion.button
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -230,12 +364,12 @@ export default function Projects({ data }: ProjectProps) {
                               }}
                               whileHover={{ scale: 1.02, y: -1 }}
                               whileTap={{ scale: 0.98 }}
-                              className="inline-flex items-center gap-2 text-black px-4 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 text-sm w-full justify-center"
+                              className="inline-flex items-center gap-2 text-black px-4 py-2 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 text-sm w-full justify-center cursor-pointer"
                               style={{
                                 backgroundColor: colors.accentColor,
                               }}
                             >
-                              View Details
+                              View Project Details
                               <motion.svg
                                 width="12"
                                 height="12"
@@ -254,8 +388,6 @@ export default function Projects({ data }: ProjectProps) {
                           </div>
                         </div>
                       </div>
-
-
                     </motion.div>
                   </motion.div>
                 </div>
