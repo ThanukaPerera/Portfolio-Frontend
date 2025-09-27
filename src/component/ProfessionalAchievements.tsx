@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Award,  Tag } from 'lucide-react';
+import { Calendar, Award, Tag, Loader2 } from 'lucide-react';
 import SectionTitle from './SectionTitle';
+import { useState } from 'react';
 
 interface Achievement {
   _id: string;
@@ -26,12 +27,19 @@ interface ProfessionalAchievementsProps {
 }
 
 export default function ProfessionalAchievements({ data }: ProfessionalAchievementsProps) {
+  const [loadingCard, setLoadingCard] = useState<string | null>(null);
+
   // Process the data directly from props - no need for API calls
   const achievements = data
     .filter((achievement: Achievement) => achievement.active)
     .sort((a: Achievement, b: Achievement) => 
       new Date(b.date || '').getTime() - new Date(a.date || '').getTime()
     );
+
+  const handleCardClick = (achievementId: string) => {
+    setLoadingCard(achievementId);
+    // Loading will be cleared when the new page loads
+  };
 
   const getCategoryColor = (category?: string) => {
     const colors: { [key: string]: string } = {
@@ -132,7 +140,7 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
                 animate={{ 
                   opacity: 1, 
                   y: 0,
-                  scale: 1,
+                  scale: loadingCard === achievement._id ? 0.98 : 1,
                   rotateX: 0
                 }}
                 transition={{ 
@@ -143,14 +151,23 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
                   stiffness: 100
                 }}
                 whileHover={{ 
-                  y: -12, 
-                  scale: 1.02,
-                  rotateY: index % 2 === 0 ? 2 : -2
+                  y: loadingCard === achievement._id ? 0 : -8, 
+                  scale: loadingCard === achievement._id ? 0.98 : 1.01,
+                  transition: { duration: 0.2, ease: "easeOut" }
+                }}
+                whileTap={{ 
+                  scale: 0.98,
+                  transition: { duration: 0.1 }
                 }}
                 className="group"
               >
-                <Link href={`/achievements/${achievement._id}`}>
-                  <div className={`achievement-card relative  backdrop-blur-sm border  rounded-2xl bg-black/60   border-orange-500/50  shadow-lg overflow-hidden hover:border-orange-500/30 smooth-transition professional-shadow hover:shadow-2xl hover:shadow-orange-500/10 h-full w-full flex flex-col`}>
+                <Link 
+                  href={`/achievements/${achievement._id}`} 
+                  prefetch={true}
+                  className="block h-full w-full"
+                  onClick={() => handleCardClick(achievement._id)}
+                >
+                  <div className={`achievement-card relative  backdrop-blur-sm border  rounded-2xl bg-black/60   border-orange-500/50  shadow-lg overflow-hidden hover:border-orange-500/30 smooth-transition professional-shadow hover:shadow-2xl hover:shadow-orange-500/10 h-full w-full flex flex-col cursor-pointer transition-all duration-200 ${loadingCard === achievement._id ? 'pointer-events-none' : ''}`}>
                     {/* Background Pattern */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${getGradientPattern(index)} opacity-20 pointer-events-none`} />
                     {/* Image Section */}
@@ -160,8 +177,9 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
                           src={achievement.imgLink[0]}
                           alt={achievement.achievementtitle}
                           fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
                           sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, (max-width: 1536px) 16vw, 12vw"
+                          priority={index < 8}
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
@@ -219,6 +237,20 @@ export default function ProfessionalAchievements({ data }: ProfessionalAchieveme
 
                     {/* Hover Border Effect */}
                     <div className="absolute inset-0 border-2 border-transparent group-hover:border-orange-500/20 rounded-2xl pointer-events-none transition-all duration-500" />
+                    
+                    {/* Loading Overlay */}
+                    {loadingCard === achievement._id && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="absolute inset-0 bg-black/80 backdrop-blur-sm rounded-2xl flex items-center justify-center z-50"
+                      >
+                        <div className="flex flex-col items-center gap-3">
+                          <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+                          <span className="text-sm text-orange-300 font-medium">Loading...</span>
+                        </div>
+                      </motion.div>
+                    )}
                   </div>
                 </Link>
               </motion.div>
