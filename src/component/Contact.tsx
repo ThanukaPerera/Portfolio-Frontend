@@ -148,7 +148,7 @@ export default function Contact({ data }: ContactProps) {
           {/* Email Card */}
           <motion.div
             variants={itemVariants}
-            className="group relative w-md bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-xl rounded-2xl p-6 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
+            className="group relative w-md bg-gradient-to-br from-gray-950 to-gray-900 backdrop-blur-xl rounded-2xl p-6 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center group-hover:from-orange-500/30 group-hover:to-red-500/30 transition-colors duration-300">
@@ -171,7 +171,7 @@ export default function Contact({ data }: ContactProps) {
           {/* Phone Card */}
           <motion.div
             variants={itemVariants}
-            className="group relative w-md bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-xl rounded-2xl p-6 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
+            className="group relative w-md bg-gradient-to-br from-gray-950 to-gray-900 backdrop-blur-xl rounded-2xl p-6 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center group-hover:from-orange-500/30 group-hover:to-red-500/30 transition-colors duration-300">
@@ -194,7 +194,7 @@ export default function Contact({ data }: ContactProps) {
           {/* Location Card */}
           <motion.div
             variants={itemVariants}
-            className="group relative w-md bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-xl rounded-2xl p-6 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
+            className="group relative w-md bg-gradient-to-br from-gray-950 to-gray-900 backdrop-blur-xl rounded-2xl p-6 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10"
           >
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center group-hover:from-orange-500/30 group-hover:to-red-500/30 transition-colors duration-300">
