@@ -158,7 +158,7 @@ export default async function Home() {
         </section>
         
         <section id="footer" className="w-full">
-          <FooterName />
+          <FooterName data={introData.response[0]} />
           <Footer data={introData.response[0]} />
         </section>
 

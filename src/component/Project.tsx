@@ -27,6 +27,7 @@ interface ProjectProps {
 }
 
 const isValidUrl = (url: string) => {
+  if (!url || typeof url !== "string") return false; 
   try {
     new URL(url);
     return true;

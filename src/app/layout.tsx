@@ -32,6 +32,8 @@ import Script from 'next/script';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/contexts/AuthContext';
 
+
+
 export const metadata: Metadata = {
   title: "Thanuka Perera",
   description: "Personal Portfolio",
