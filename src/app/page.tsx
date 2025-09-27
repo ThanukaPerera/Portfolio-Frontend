@@ -153,7 +153,7 @@ export default async function Home() {
 
         <TimelineNav />
       {/* Content sections - now with transparent/minimal backgrounds */}
-      <div className="w-full bg-transparent relative z-20 flex flex-col items-center justify-center">
+      <div className="w-full bg-transparent relative min-w-md mx-auto z-20 flex flex-col items-center justify-center">
         {/* <Intro data={introData.response[0]} />
         <AboutMe data={aboutData.response[0]} />
         <Skills data={aboutData.response[0]} />
