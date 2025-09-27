@@ -104,14 +104,14 @@ export default function AchievementDetail({ id }: AchievementDetailProps) {
       
 
       <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mx-auto">
           {/* Image Gallery Section */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-4 w-lg h-full mx-auto flex justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="space-y-6"
+              className="space-y-6 w-full h-full"
             >
               {/* Main Image */}
               <div className="relative group">
